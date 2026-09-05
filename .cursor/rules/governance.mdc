@@ -1,0 +1,13 @@
+---
+description: Evidence, simplicity, and release rules for Mrs Gill English
+alwaysApply: true
+---
+
+# Governance
+
+- Never invent qualifications, prices, contact details, testimonials, DBS status, locations, or results.
+- If a fact is missing, omit the public claim. Record the gap in `docs/CONTENT_GAPS.md`.
+- Do not add databases, auth, Stripe, CMS, booking widgets, or analytics without a current feature need.
+- Edit public facts in `src/content/`. Do not scatter service copy through JSX.
+- Secrets stay out of Git. V1 has no required environment variables.
+- Before release: `npm run health`, `npm run build`, and `git diff --check`.

@@ -1,0 +1,14 @@
+---
+description: Brand naming and content evidence rules
+globs: src/content/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Content and brand
+
+- Site identity is **Mrs Gill English**. YouTube may be cited as Mrs Gill the English Teacher.
+- Channel Edexcel focus describes the **revision videos**, not automatically the paid tutoring offer.
+- Key Stage 3, GCSE, one-to-one, and small groups come from Issy's brief.
+- Hide pricing, enquiry forms, testimonials, and booking until real values exist in `src/content/`.
+- Do not publish subscriber counts or view counts. They go stale.
+- UK English. Clear, encouraging, exam-useful. No corporate hype and no guaranteed grades.

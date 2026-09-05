@@ -1,0 +1,15 @@
+---
+description: Mrs Gill English visual system and accessibility
+globs: src/**/*.{tsx,css}
+alwaysApply: false
+---
+
+# UI and design
+
+- Derive colour and motifs from `public/brand/youtube-banner.jpg` and `public/brand/youtube-profile.jpg`.
+- Use the tokens in `src/app/globals.css`. Do not introduce purple/blue SaaS gradients or glass cards.
+- Headings: Literata. Body and UI: Source Sans 3. Do not add extra font families.
+- Light parchment theme is brand-locked. Do not add an unrequested dark theme.
+- WCAG AA contrast for text and controls. Brass (`--color-brass`) is decorative only.
+- Visible focus rings. Honour `prefers-reduced-motion`. No autoplaying media.
+- Do not stretch brand images. The supplied files are small; keep them near native scale or as crops.

@@ -1,0 +1,12 @@
+---
+description: Verification required before treating work as releasable
+alwaysApply: true
+---
+
+# Testing and release
+
+- `npm run lint`, `npm run typecheck`, and `npm run test` must pass.
+- `npm run build` must pass before push or preview deploy.
+- `git diff --check` must be clean.
+- Check mobile and desktop layout, keyboard nav, and YouTube links in a browser when UI changed.
+- Do not ship placeholder lorem, fake emails, or forms that discard submissions.
