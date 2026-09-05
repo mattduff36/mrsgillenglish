@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mrs Gill English — a few details for the website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,600;7..72,700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --page: #F4EFE8;
+      --parchment: #F0E6DD;
+      --taupe: #C2B4A7;
+      --ink: #161012;
+      --ink-soft: #3F3834;
+      --navy: #2C3849;
+      --navy-deep: #1C2433;
+      --navy-fg: #F4EFE8;
+      --brass: #A48B71;
+      --brass-deep: #6B5344;
+      --line: #D4C8BB;
+      --display: "Literata", "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+      --sans: "Source Sans 3", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { color-scheme: light; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.55;
+    }
+
+    .banner {
+      background: var(--taupe);
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+    .banner::before {
+      content: "";
+      display: block;
+      height: 10px;
+      background: var(--navy);
+    }
+    .wrap {
+      width: min(46rem, calc(100% - 2rem));
+      margin: 0 auto;
+    }
+    header.hero { padding: 2.4rem 0 2.6rem; }
+    .kicker {
+      color: var(--brass-deep);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+    h1, h2, h3 {
+      font-family: var(--display);
+      color: var(--navy);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin: 0.4rem 0 0.8rem; }
+    h2 { font-size: 1.7rem; margin: 0 0 0.4rem; }
+    h3 { font-size: 1.15rem; margin: 1.4rem 0 0.4rem; }
+    p { margin: 0 0 0.85rem; color: var(--ink-soft); }
+    .lead { font-size: 1.12rem; max-width: 40rem; }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 1.1rem 0 0; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 1.8rem;
+      padding: 0 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .badge-launch { background: var(--navy); color: var(--navy-fg); }
+    .badge-improve { background: var(--parchment); color: var(--brass-deep); border: 1px solid var(--brass); }
+    .badge-future { background: transparent; color: var(--ink-soft); border: 1px solid var(--line); }
+
+    main { padding: 0 0 3rem; }
+    section.card {
+      background: var(--parchment);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.35rem 1.35rem 1.5rem;
+      margin: 1.25rem 0;
+      page-break-inside: avoid;
+    }
+    section.card > .meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.7rem;
+    }
+    .why { font-size: 0.95rem; }
+
+    ol.qs { margin: 0; padding: 0; list-style: none; counter-reset: q; }
+    ol.qs > li {
+      counter-increment: q;
+      padding: 0.95rem 0;
+      border-top: 1px solid var(--line);
+    }
+    ol.qs > li:first-child { border-top: 0; padding-top: 0.2rem; }
+    ol.qs > li::before {
+      content: counter(q);
+      display: inline-block;
+      width: 1.5rem;
+      height: 1.5rem;
+      margin: 0 0.5rem 0.3rem 0;
+      border-radius: 999px;
+      background: var(--navy);
+      color: var(--navy-fg);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.5rem;
+      vertical-align: middle;
+    }
+    .q { font-weight: 700; color: var(--ink); }
+    .hint { display: block; margin: 0.25rem 0 0.55rem; color: var(--ink-soft); font-size: 0.95rem; }
+
+    .choices { display: grid; gap: 0.35rem; margin: 0.4rem 0 0.6rem; }
+    label.choice {
+      display: flex;
+      gap: 0.55rem;
+      align-items: flex-start;
+      color: var(--ink);
+    }
+    label.choice input { margin-top: 0.3rem; accent-color: var(--navy); }
+
+    .line, .box {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: var(--page);
+      border-radius: 8px;
+    }
+    .line { min-height: 2.4rem; margin-top: 0.4rem; }
+    .box { min-height: 5.2rem; margin-top: 0.4rem; }
+    .box.tall { min-height: 8rem; }
+
+    .note {
+      background: var(--page);
+      border-left: 4px solid var(--navy);
+      padding: 0.7rem 0.9rem;
+      border-radius: 0 8px 8px 0;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .warn {
+      border: 1px solid var(--brass);
+      background: var(--page);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      color: var(--ink);
+    }
+
+    footer.doc {
+      border-top: 8px solid var(--navy-deep);
+      background: var(--navy-deep);
+      color: var(--navy-fg);
+      padding: 2rem 0;
+    }
+    footer.doc p { color: rgba(244, 239, 232, 0.86); }
+    .print-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.1rem;
+    }
+    button, .btn {
+      appearance: none;
+      border: 0;
+      background: var(--navy);
+      color: var(--navy-fg);
+      font: inherit;
+      font-weight: 700;
+      min-height: 2.75rem;
+      padding: 0 1.1rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--navy);
+      border: 1px solid var(--navy);
+    }
+
+    @media (max-width: 640px) {
+      section.card { padding: 1rem; }
+      h1 { font-size: 1.85rem; }
+    }
+
+    @media print {
+      body { background: white; }
+      .print-actions, .no-print { display: none !important; }
+      .banner::before { height: 6px; }
+      section.card {
+        break-inside: avoid;
+        background: white;
+        border-color: #cfc4b6;
+      }
+      .line, .box { background: white; }
+      a { color: inherit; text-decoration: none; }
+      footer.doc { background: white; color: var(--ink); border-top: 2px solid var(--navy); }
+      footer.doc p { color: var(--ink-soft); }
+    }
+
+    @page { margin: 14mm; }
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <header class="hero wrap">
+      <p class="kicker">Mrs Gill English</p>
+      <h1>A few details to make the website feel like yours</h1>
+      <p class="lead">
+        The first version of the site is ready. It follows the look and voice of
+        your YouTube classroom, Mrs Gill the English Teacher, and it already
+        points people to the revision videos for <em>A Christmas Carol</em>,
+        <em>Macbeth</em>, <em>Coram Boy</em> and the Belonging poetry.
+      </p>
+      <p class="lead">
+        There are some details only you can confirm. You do not need to answer
+        everything at once. The items marked <strong>Needed for launch</strong>
+        are the ones that help parents get in touch and trust what they read.
+      </p>
+      <div class="badges">
+        <span class="badge badge-launch">Needed for launch</span>
+        <span class="badge badge-improve">Would improve the site</span>
+        <span class="badge badge-future">Future idea</span>
+      </div>
+      <div class="print-actions no-print">
+        <button type="button" onclick="window.print()">Print or save as PDF</button>
+      </div>
+    </header>
+  </div>
+
+  <main class="wrap">
+    <p class="note">
+      Write on this page, type into a copy, or reply by email in any order.
+      If a question does not apply, tick “Not for the site” or leave it blank.
+      Please do not send passwords or account login details by email. If access
+      is needed later, Matt will arrange that separately and securely.
+    </p>
+
+    <section class="card" id="contact">
+      <div class="meta">
+        <h2>1. How parents should reach you</h2>
+        <span class="badge badge-launch">Needed for launch</span>
+      </div>
+      <p class="why">Without a public email, families can watch the videos but cannot enquire about lessons from the website.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">What public email should appear on the site?</span>
+          <span class="hint">This becomes the “Enquire about tutoring” button.</span>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Should a phone number be shown?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> No, email only</label>
+            <label class="choice"><input type="checkbox" /> Yes, this number:</label>
+          </div>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">How would you prefer families to get in touch?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Email</label>
+            <label class="choice"><input type="checkbox" /> Phone or text</label>
+            <label class="choice"><input type="checkbox" /> A form on the website, later</label>
+            <label class="choice"><input type="checkbox" /> A booking calendar, later</label>
+          </div>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">For younger pupils, should a parent or guardian be the usual contact?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Yes, parents in the first instance</label>
+            <label class="choice"><input type="checkbox" /> It depends on the pupil’s age</label>
+            <label class="choice"><input type="checkbox" /> No special note needed</label>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="lessons">
+      <div class="meta">
+        <h2>2. Where lessons happen</h2>
+        <span class="badge badge-launch">Needed for launch</span>
+      </div>
+      <p class="why">Parents need to know whether tutoring is online, in person, or both. A town or area is enough. There is no need to publish a private home address.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">What lesson format should the site mention?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Online</label>
+            <label class="choice"><input type="checkbox" /> In person</label>
+            <label class="choice"><input type="checkbox" /> Both</label>
+            <label class="choice"><input type="checkbox" /> Not ready to say yet</label>
+          </div>
+        </li>
+        <li>
+          <span class="q">If you offer in-person lessons, which town or area should we show?</span>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">May we show a full address, or only the area?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Area or town only, please</label>
+            <label class="choice"><input type="checkbox" /> A business address may be shown</label>
+            <label class="choice"><input type="checkbox" /> Do not show a location yet</label>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="pricing">
+      <div class="meta">
+        <h2>3. Prices and lesson length</h2>
+        <span class="badge badge-improve">Would improve the site</span>
+      </div>
+      <p class="why">The site can show prices later, or keep them off the page and share them by email. Empty prices stay hidden, so nothing fake appears.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">One-to-one price and usual lesson length</span>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Small-group price, lesson length, and ideal group size</span>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Do Key Stage 3 and GCSE have different prices?</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Are there bundles, intro sessions, or packages?</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Should prices appear on the website?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Yes, show them publicly</label>
+            <label class="choice"><input type="checkbox" /> No, send them after an enquiry</label>
+            <label class="choice"><input type="checkbox" /> Decide later</label>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="availability">
+      <div class="meta">
+        <h2>4. Availability and booking</h2>
+        <span class="badge badge-improve">Would improve the site</span>
+      </div>
+      <p class="why">A short sentence is often better than a timetable that goes stale. This also tells us whether a booking system is worth adding later.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">Typical days or times, if you want them mentioned</span>
+          <span class="hint">For example: weekday evenings, or Saturday mornings.</span>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Does availability change often?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Yes, keep the wording general</label>
+            <label class="choice"><input type="checkbox" /> Fairly steady, a short sentence is fine</label>
+            <label class="choice"><input type="checkbox" /> I may want exact slots on the site later</label>
+          </div>
+        </li>
+        <li>
+          <span class="q">What should happen after someone enquires?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> You reply by email and confirm by hand</label>
+            <label class="choice"><input type="checkbox" /> A website contact form</label>
+            <label class="choice"><input type="checkbox" /> Phone or message</label>
+            <label class="choice"><input type="checkbox" /> A booking calendar later</label>
+            <label class="choice"><input type="checkbox" /> A “request a session” form later</label>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="about">
+      <div class="meta">
+        <h2>5. About you</h2>
+        <span class="badge badge-improve">Would improve the site</span>
+      </div>
+      <p class="why">A few sentences in your own words make the site feel like you, not only like the channel artwork. Only include facts you are happy to make public.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">A short introduction, in your words</span>
+          <div class="box tall" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Anything you would like mentioned about your teaching background</span>
+          <span class="hint">Roles, years of experience, subjects or key stages, only if you want them shown.</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Qualifications you want on the site</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Exam boards you have experience with, for paid lessons</span>
+          <span class="hint">The revision channel is clearly Edexcel. That does not have to be the limit of tutoring unless you say so.</span>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Why you enjoy teaching English, and what pupils can expect from a lesson</span>
+          <div class="box tall" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">What pupils often find difficult, and how you help them feel more confident</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Public trust details, only if they are true and you want them shown</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> DBS, if you want the wording published</label>
+            <label class="choice"><input type="checkbox" /> Safeguarding note</label>
+            <label class="choice"><input type="checkbox" /> Professional memberships</label>
+            <label class="choice"><input type="checkbox" /> Other certificates</label>
+            <label class="choice"><input type="checkbox" /> None of these on the site</label>
+          </div>
+          <div class="box" contenteditable="true"></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="offer">
+      <div class="meta">
+        <h2>6. What you actually tutor</h2>
+        <span class="badge badge-improve">Would improve the site</span>
+      </div>
+      <p class="why">Tick what is true. Leave the rest. The site should not claim you teach everything.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">Which of these should the site offer?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Key Stage 3 English</label>
+            <label class="choice"><input type="checkbox" /> GCSE English Language</label>
+            <label class="choice"><input type="checkbox" /> GCSE English Literature</label>
+            <label class="choice"><input type="checkbox" /> Exam technique</label>
+            <label class="choice"><input type="checkbox" /> Creative writing</label>
+            <label class="choice"><input type="checkbox" /> Transactional writing</label>
+            <label class="choice"><input type="checkbox" /> Reading comprehension</label>
+            <label class="choice"><input type="checkbox" /> Grammar, spelling and punctuation</label>
+            <label class="choice"><input type="checkbox" /> Revision planning</label>
+            <label class="choice"><input type="checkbox" /> Homework support</label>
+            <label class="choice"><input type="checkbox" /> Confidence-building</label>
+          </div>
+        </li>
+        <li>
+          <span class="q">Which exam boards do you support in paid lessons?</span>
+          <span class="hint">Is Edexcel your main specialism for tutoring, or mainly for the YouTube videos?</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Which texts are you happy to tutor, beyond the channel list?</span>
+          <span class="hint">The site already mentions the channel texts: A Christmas Carol, Macbeth, Coram Boy, and Belonging poetry.</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Do one-to-one and groups have different aims?</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Can pupils join an existing group, and is there a maximum size?</span>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Are dedicated revision classes or short intensive sessions likely near exams?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Yes, closer to exams</label>
+            <label class="choice"><input type="checkbox" /> Possibly later</label>
+            <label class="choice"><input type="checkbox" /> Not planned</label>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="photos">
+      <div class="meta">
+        <h2>7. Photographs</h2>
+        <span class="badge badge-improve">Would improve the site</span>
+      </div>
+      <p class="why">The illustrated YouTube portrait already gives the site its character. Real photographs, if you have them, would make the tutoring pages feel warmer. Pupils must not appear without the right consent, and we do not need identifiable student pictures. Stock photos are not needed if you can share a few of your own.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">Can you share any of these?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> A professional or natural portrait</label>
+            <label class="choice"><input type="checkbox" /> A teaching or classroom-style photo</label>
+            <label class="choice"><input type="checkbox" /> Desk, books or workspace</label>
+            <label class="choice"><input type="checkbox" /> Branded teaching materials</label>
+            <label class="choice"><input type="checkbox" /> Not yet</label>
+          </div>
+        </li>
+        <li>
+          <span class="q">Should the current YouTube portrait and banner stay as the long-term look?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Yes, keep them</label>
+            <label class="choice"><input type="checkbox" /> Keep them for now</label>
+            <label class="choice"><input type="checkbox" /> I may replace them later</label>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="testimonials">
+      <div class="meta">
+        <h2>8. Genuine feedback</h2>
+        <span class="badge badge-improve">Would improve the site</span>
+      </div>
+      <p class="why">A short real comment from a parent, pupil or colleague can help a lot. Please only send wording you have permission to publish. We will not invent or tidy quotes into something the person did not say.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">Do you have any feedback you are happy to use?</span>
+          <div class="box tall" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">For each quote: the exact words, how we may name them, and confirmation we may publish it</span>
+          <span class="hint">First name only, initials, or “Parent of a GCSE student” are all fine.</span>
+          <div class="box tall" contenteditable="true"></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="youtube">
+      <div class="meta">
+        <h2>9. YouTube and revision</h2>
+        <span class="badge badge-improve">Would improve the site</span>
+      </div>
+      <p class="why">The site already features longer videos from the channel, grouped around your playlists: A Christmas Carol, Macbeth, Coram Boy and Poetry. Methods named on the channel (PETAL, PEER and PETER) are treated as tools, not magic formulas. Shorts stay on YouTube rather than being listed one by one.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">Which videos should be featured first, if not the current Christmas Carol part B film?</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Will the channel keep growing, and should newer videos be highlighted automatically later?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Yes, keep adding videos</label>
+            <label class="choice"><input type="checkbox" /> Highlight new ones on the site later if we can</label>
+            <label class="choice"><input type="checkbox" /> I prefer to choose what appears on the site</label>
+          </div>
+        </li>
+        <li>
+          <span class="q">Should any revision topics get their own website section later?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> A Christmas Carol</label>
+            <label class="choice"><input type="checkbox" /> Macbeth</label>
+            <label class="choice"><input type="checkbox" /> Coram Boy</label>
+            <label class="choice"><input type="checkbox" /> Belonging poetry</label>
+            <label class="choice"><input type="checkbox" /> Exam methods</label>
+            <label class="choice"><input type="checkbox" /> Grammar and writing</label>
+            <label class="choice"><input type="checkbox" /> Keep one revision library for now</label>
+          </div>
+        </li>
+        <li>
+          <span class="q">Would you like the website to become a revision hub as well as a tutoring site?</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="resources">
+      <div class="meta">
+        <h2>10. Resources, later</h2>
+        <span class="badge badge-future">Future idea</span>
+      </div>
+      <p class="why">You mentioned resources as a possibility. Nothing needs building now. A sense of direction helps the site stay tidy when you are ready.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">What do you imagine this becoming, if anything?</span>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" /> Free downloads</label>
+            <label class="choice"><input type="checkbox" /> Worksheets</label>
+            <label class="choice"><input type="checkbox" /> Revision guides</label>
+            <label class="choice"><input type="checkbox" /> Model answers</label>
+            <label class="choice"><input type="checkbox" /> Quizzes on the site</label>
+            <label class="choice"><input type="checkbox" /> Paid resources</label>
+            <label class="choice"><input type="checkbox" /> Pupil-only resources</label>
+            <label class="choice"><input type="checkbox" /> Email-gated downloads</label>
+            <label class="choice"><input type="checkbox" /> Not sure, leave it for later</label>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="domain">
+      <div class="meta">
+        <h2>11. Domain and business details</h2>
+        <span class="badge badge-launch">Needed for launch</span>
+      </div>
+      <p class="why">The site can stay on its preview address until the domain is confirmed. The privacy page also needs a name and contact if you want a proper notice.</p>
+      <p class="warn"><strong>Please do not send passwords or account login details by email.</strong> If Matt needs access, that can be handled separately and securely.</p>
+      <ol class="qs">
+        <li>
+          <span class="q">What domain name have you already bought?</span>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Is it held in GoDaddy, and who can access that account?</span>
+          <span class="hint">Names only, not passwords.</span>
+          <div class="line" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">Does the domain point anywhere yet, and do any email addresses already exist on it?</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+        <li>
+          <span class="q">What name and email should appear on the privacy page?</span>
+          <span class="hint">This can be the trading name and the same public email, if that is what you want.</span>
+          <div class="box" contenteditable="true"></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card" id="later">
+      <div class="meta">
+        <h2>12. Useful later, not a promise to build it all</h2>
+        <span class="badge badge-future">Future idea</span>
+      </div>
+      <p class="why">Tick anything that sounds helpful. This is a conversation, not a shopping list.</p>
+      <div class="choices">
+        <label class="choice"><input type="checkbox" /> Online booking</label>
+        <label class="choice"><input type="checkbox" /> Automatic confirmation emails</label>
+        <label class="choice"><input type="checkbox" /> A revision resource library</label>
+        <label class="choice"><input type="checkbox" /> Blog or revision articles</label>
+        <label class="choice"><input type="checkbox" /> A mailing list</label>
+        <label class="choice"><input type="checkbox" /> A pupil resource area</label>
+        <label class="choice"><input type="checkbox" /> Paid downloads</label>
+        <label class="choice"><input type="checkbox" /> Lesson packages</label>
+        <label class="choice"><input type="checkbox" /> An FAQ page</label>
+        <label class="choice"><input type="checkbox" /> Exam countdown or revision features</label>
+        <label class="choice"><input type="checkbox" /> Automatic YouTube updates</label>
+      </div>
+    </section>
+
+    <section class="card" id="else">
+      <div class="meta">
+        <h2>13. Anything else?</h2>
+        <span class="badge badge-improve">Would improve the site</span>
+      </div>
+      <p class="why">Tone, words you never want used, texts you do not tutor, or anything that would make the site feel more like you.</p>
+      <div class="box tall" contenteditable="true"></div>
+    </section>
+  </main>
+
+  <footer class="doc">
+    <div class="wrap">
+      <p><strong>Mrs Gill English</strong></p>
+      <p>Thank you. Answer what you can, skip the rest, and Matt will add the confirmed details to the site.</p>
+    </div>
+  </footer>
+</body>
+</html>

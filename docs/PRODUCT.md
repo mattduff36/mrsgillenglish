@@ -31,9 +31,13 @@ Not created in V1: `/about`, `/tutoring`, `/contact`, `/pricing`, `/booking`. Th
 ## Primary actions
 
 - **Browse revision videos** is the current primary action. The destination is verified.
-- **Enquire about tutoring** appears only when `site.enquiryEmail` is set.
-- Booking is a future action, not a V1 control.
+- **Enquire about tutoring** appears only when a public email is set in `/admin`.
+- Booking is a future action, not a public control.
+
+## Site editor
+
+`/admin` is a private editor for Matt (and later Issy). It is not part of the public information architecture.
 
 ## Out of scope for V1
 
-Payments, accounts, a CMS, a booking calendar, downloadable resource hosting, analytics, and the unknown custom domain.
+Payments, pupil accounts, a booking calendar, downloadable resource hosting, analytics, and the unknown custom domain.

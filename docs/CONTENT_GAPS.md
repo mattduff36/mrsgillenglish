@@ -1,6 +1,6 @@
 # Content gaps
 
-Facts that must not be invented. Ask Issy for these rather than filling them from search.
+Facts that must not be invented. Ask Issy using `docs/client/ISSY-WEBSITE-FOLLOW-UP.html`, then enter confirmed answers in `/admin`.
 
 ## Needed before a confident public launch
 

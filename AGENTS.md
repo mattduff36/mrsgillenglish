@@ -20,8 +20,8 @@ Public brand: **Mrs Gill English**. YouTube channel title: **Mrs Gill the Englis
 - Preserve the design system in `docs/DESIGN.md` and `.cursor/skills/mrs-gill-design/SKILL.md`.
 - Accessibility (WCAG AA) and responsive behaviour are release requirements.
 - Production builds must pass before release. Run `npm run health` and `npm run build`.
-- Secrets must never enter Git. V1 needs no credentials.
-- Keep the architecture simple. No database, auth, payments, CMS, booking provider, or analytics unless a current feature requires it.
+- Secrets must never enter Git. Admin credentials live in environment variables only.
+- Keep the architecture simple. The site now has a small Auth.js admin and a single Blob/JSON content document. Do not add payments, booking, analytics, or a larger CMS unless a current feature requires it.
 - Future booking, pricing, resources, and contact destinations must be content-flagged, not half-built fakes.
 - Live code is implementation evidence. Canonical product and design docs define intended behaviour when they are explicitly updated.
 - UK English. No guaranteed grades, fake testimonials, or fabricated contact details.

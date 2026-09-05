@@ -1,7 +1,5 @@
 # Testing
 
-V1 is a static marketing site. Tests protect content rules, not a giant application framework.
-
 ## Commands
 
 ```bash
@@ -16,12 +14,12 @@ npm run build
 
 ## What is covered
 
-- Required site fields exist
-- Enquiry and pricing stay unpublished when empty
-- Every curated video has an id, title, topic, and local thumbnail path
-- Topics match the real channel groupings
-- Routes expected by the product doc stay listed in content
+- Seed brand, routes, unpublished enquiry and prices
+- Every curated seed video has an id, title, topic, and local thumbnail
+- Optional sections hide when empty or disabled
+- Admin env fail-closed, session guard, validation, persistence, XSS rejection
+- `/admin` is not in the public sitemap
 
 ## Browser QA
 
-Before calling UI work done, check `/`, `/revision`, `/privacy`, and the 404 page at about 375, 768, 1024, and 1440px. Keyboard the header. Confirm YouTube links open the right videos. Confirm no console errors.
+Check `/`, `/revision`, `/privacy`, the 404 page, `/admin/login`, and `/admin` at about 375 and 1440px. Keyboard the public header and the admin forms. Confirm YouTube links open the right videos. Confirm unsigned `/admin` redirects to login. Confirm sign-out returns to login.
