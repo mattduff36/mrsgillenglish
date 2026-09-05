@@ -8,7 +8,7 @@ Date: 5 September 2026
 The public site and `/admin` share one Zod-validated `SiteContent` JSON document.
 
 - **Persistence:** Vercel Blob, one private object `mrs-gill/site-content.json`. Local development writes `.data/site-content.json` (gitignored). Production without a blob token serves the TypeScript seed and refuses saves.
-- **Auth:** Auth.js v5 Credentials, JWT cookie, 12-hour session. One admin, from `ADMIN_EMAIL` and `ADMIN_PASSWORD_HASH`. Middleware uses a config file that does not import password hashing.
+- **Auth:** Auth.js v5 Credentials, JWT cookie, 12-hour session. Up to four admins, from `ADMIN_EMAIL_1`…`_4` and matching password hashes. Middleware uses a config file that does not import password hashing.
 - **Publishing:** Immediate save. No draft workflow.
 - **Media:** No uploads. Brand images and seed thumbnails stay in `public/`. New videos may use a YouTube thumbnail.
 - **Cache:** Public reads use the `site-content` tag. A successful save revalidates that tag and the public routes.
@@ -29,4 +29,4 @@ Immediate publish is enough for one administrator. Draft/publish would add state
 
 ## Consequences
 
-Matt sets `AUTH_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, and production `BLOB_READ_WRITE_TOKEN` on Vercel. Local saves do not need Blob. Content is backed up by downloading the JSON from Blob or copying `.data/site-content.json`. Adding another administrator later would need a new auth model; one login is enough now.
+Matt sets `AUTH_SECRET`, at least one admin email/hash pair, and production `BLOB_READ_WRITE_TOKEN` on Vercel. Local saves do not need Blob. Content is backed up by downloading the JSON from Blob or copying `.data/site-content.json`. Up to four administrators are supported through numbered env pairs.

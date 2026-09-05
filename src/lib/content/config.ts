@@ -1,13 +1,13 @@
+import { getAdminAccounts } from "@/lib/auth/accounts";
+
 export function isProduction(): boolean {
   return process.env.NODE_ENV === "production" && process.env.VERCEL === "1";
 }
 
-export function isAuthConfigured(): boolean {
-  return Boolean(
-    process.env.AUTH_SECRET &&
-      process.env.ADMIN_EMAIL &&
-      process.env.ADMIN_PASSWORD_HASH,
-  );
+export function isAuthConfigured(
+  env: Record<string, string | undefined> = process.env,
+): boolean {
+  return Boolean(env.AUTH_SECRET && getAdminAccounts(env).length > 0);
 }
 
 export function isBlobConfigured(): boolean {

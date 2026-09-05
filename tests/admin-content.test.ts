@@ -3,6 +3,7 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, it } from "node:test";
+import { getAdminAccounts } from "../src/lib/auth/accounts";
 import { assertAdminSession } from "../src/lib/auth/session";
 import {
   getEnquiryHref,
@@ -54,18 +55,31 @@ describe("T-optional-hidden", () => {
 
 describe("T-admin-env-fail-closed", () => {
   it("treats missing admin secrets as unconfigured", () => {
-    const previous = {
-      AUTH_SECRET: process.env.AUTH_SECRET,
-      ADMIN_EMAIL: process.env.ADMIN_EMAIL,
-      ADMIN_PASSWORD_HASH: process.env.ADMIN_PASSWORD_HASH,
+    assert.equal(isAuthConfigured({}), false);
+    assert.equal(
+      isAuthConfigured({ AUTH_SECRET: "secret", ADMIN_EMAIL_1: "a@example.com" }),
+      false,
+    );
+  });
+
+  it("accepts up to four complete admin pairs", () => {
+    const env = {
+      AUTH_SECRET: "secret",
+      ADMIN_EMAIL_1: "one@example.com",
+      ADMIN_PASSWORD_HASH_1: "hash-one",
+      ADMIN_EMAIL_2: "two@example.com",
+      ADMIN_PASSWORD_HASH_2: "hash-two",
+      ADMIN_EMAIL_3: "",
+      ADMIN_PASSWORD_HASH_3: "",
+      ADMIN_EMAIL: "legacy@example.com",
+      ADMIN_PASSWORD_HASH: "hash-legacy",
     };
-    delete process.env.AUTH_SECRET;
-    delete process.env.ADMIN_EMAIL;
-    delete process.env.ADMIN_PASSWORD_HASH;
-    assert.equal(isAuthConfigured(), false);
-    process.env.AUTH_SECRET = previous.AUTH_SECRET;
-    process.env.ADMIN_EMAIL = previous.ADMIN_EMAIL;
-    process.env.ADMIN_PASSWORD_HASH = previous.ADMIN_PASSWORD_HASH;
+    assert.equal(isAuthConfigured(env), true);
+    assert.deepEqual(
+      getAdminAccounts(env).map((account) => account.email),
+      ["one@example.com", "two@example.com"],
+    );
+    assert.equal(getAdminAccounts({ ADMIN_EMAIL: "legacy@example.com", ADMIN_PASSWORD_HASH: "hash-legacy" }).length, 1);
   });
 
   it("does not treat a local machine as hosted production", () => {

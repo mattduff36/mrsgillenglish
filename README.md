@@ -18,7 +18,7 @@ npm run dev
 
 Open http://localhost:3000.
 
-To use `/admin` locally, set `AUTH_SECRET`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD_HASH` in `.env.local`. Create the hash with:
+To use `/admin` locally, set `AUTH_SECRET` and at least one `ADMIN_EMAIL_1` / `ADMIN_PASSWORD_HASH_1` pair in `.env.local`. Up to four admin accounts are supported. Create each hash with:
 
 ```bash
 npm run hash-admin-password -- "your-password"
@@ -66,7 +66,7 @@ Leave pricing, enquiry, and testimonials empty until Issy supplies real values. 
 
 ## Environment variables
 
-See `.env.example`. Production on Vercel also needs `BLOB_READ_WRITE_TOKEN` so admin saves persist.
+See `.env.example` and `docs/DEPLOYMENT.md`. Production needs `AUTH_SECRET`, at least one admin email/hash pair, `BLOB_READ_WRITE_TOKEN`, and `NEXT_PUBLIC_SITE_URL`. Up to four admin pairs are supported (`ADMIN_EMAIL_1` … `_4`).
 
 ## Deployment
 

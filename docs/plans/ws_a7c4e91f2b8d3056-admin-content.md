@@ -23,7 +23,7 @@ One Zod-validated `SiteContent` JSON document. Seed from the current TypeScript 
 
 ### Auth
 
-**Chosen:** Auth.js v5 Credentials, JWT session, httpOnly cookie. Single admin via `ADMIN_EMAIL` + `ADMIN_PASSWORD_HASH` (bcrypt). `AUTH_SECRET` required. No user table. Login rate-limited in-process. Mutations only through Server Actions that call `auth()` again. `/admin` is noindex and omitted from the sitemap and public nav.
+**Chosen:** Auth.js v5 Credentials, JWT session, httpOnly cookie. Up to four admins via `ADMIN_EMAIL_1`…`_4` and matching password hashes (bcrypt). `AUTH_SECRET` required. No user table. Login rate-limited in-process. Mutations only through Server Actions that call `auth()` again. `/admin` is noindex and omitted from the sitemap and public nav.
 
 **Rejected:** Public unauthenticated editor. Plaintext env password compare. Client-only hiding of `/admin`. Clerk/Auth0 (vendor for one user).
 

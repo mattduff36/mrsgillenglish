@@ -19,8 +19,11 @@ For `/admin`, add to `.env.local`:
 
 ```
 AUTH_SECRET=
-ADMIN_EMAIL=
-ADMIN_PASSWORD_HASH=
+ADMIN_EMAIL_1=
+ADMIN_PASSWORD_HASH_1=
+ADMIN_EMAIL_2=
+ADMIN_PASSWORD_HASH_2=
+# Slots 3 and 4 are optional and can stay empty.
 ```
 
 ```bash
@@ -40,7 +43,7 @@ Local content saves go to `.data/site-content.json`.
 | `npm run health` | lint, typecheck, test |
 | `npm run build` | Production build |
 | `npm start` | Serve the production build |
-| `npm run hash-admin-password` | Create `ADMIN_PASSWORD_HASH` |
+| `npm run hash-admin-password` | Create an `ADMIN_PASSWORD_HASH_n` value |
 
 ## Edit content
 

@@ -11,7 +11,7 @@
 | Styling | Tailwind CSS v4 | Official create-next-app default |
 | Package manager | npm | Brief default. Lockfile committed |
 | Hosting | Vercel | Marketing site plus a small admin |
-| Auth | Auth.js v5 Credentials | One admin, JWT cookie |
+| Auth | Auth.js v5 Credentials | Up to four env-based admins, JWT cookie |
 | Content store | Vercel Blob, one private JSON object | Durable, cheap, no database |
 | Validation | Zod | Shared by public reads and admin writes |
 
@@ -42,7 +42,7 @@ After a save: `revalidateTag('site-content')` and `revalidatePath` for `/`, `/re
 
 `/admin` is not linked from the public navigation. Middleware redirects unsigned visitors to `/admin/login` and sends `X-Robots-Tag: noindex, nofollow`. `robots.ts` also disallows `/admin` and `/api/auth`.
 
-Server Actions call `requireAdmin()` again before writing. Login attempts are rate-limited in process (8 failures / 15 minutes per isolate).
+Up to four administrators are configured as numbered env pairs (`ADMIN_EMAIL_1` / `ADMIN_PASSWORD_HASH_1` through `_4`). Unused slots stay empty. Server Actions call `requireAdmin()` again before writing. Login attempts are rate-limited in process (8 failures / 15 minutes per isolate).
 
 ## Content flags
 
