@@ -47,7 +47,7 @@ Local content saves go to `.data/site-content.json`.
 
 ## Edit content
 
-Prefer `/admin`. Change `src/content/` only when updating the seed that new environments start from. Add a YouTube thumbnail under `public/videos/{id}.jpg` when you want a local image for a new video.
+Prefer `/admin`. Change `src/content/` only when updating the seed that new environments start from. A stored `.data/site-content.json` or production Blob document overrides the seed until it is replaced or deleted. Add a YouTube thumbnail under `public/videos/{id}.jpg` when you want a local image for a new video.
 
 ## Brand assets
 

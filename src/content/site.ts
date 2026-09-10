@@ -4,10 +4,10 @@ export const site = {
   locale: "en-GB",
   tagline: "English tutoring and GCSE revision, clearly explained.",
   shortDescription:
-    "One-to-one and small-group English tuition for Key Stage 3 and GCSE, with free Edexcel literature revision on YouTube.",
+    "One-to-one and small-group English tuition for Key Stage 3 and GCSE, online or in person around Stoke-by-Clare.",
   metaDescription:
-    "Mrs Gill English offers Key Stage 3 and GCSE English tutoring, plus free Edexcel literature revision videos for A Christmas Carol, Macbeth, Coram Boy and poetry.",
-  enquiryEmail: null as string | null,
+    "Mrs Gill English offers Key Stage 3 and GCSE English tutoring online and in person around Stoke-by-Clare, with free Edexcel literature revision videos.",
+  enquiryEmail: "mrsgillenglishteacher@gmail.com" as string | null,
   phone: null as string | null,
   bookingUrl: null as string | null,
   youtube: {
@@ -38,13 +38,21 @@ export const site = {
   navigation: [
     { href: "/#tutoring", label: "Tutoring" },
     { href: "/revision", label: "Revision" },
-    { href: "/#about", label: "About" },
+    { href: "/about", label: "About" },
   ],
   footerNavigation: [
     { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
     { href: "/revision", label: "Revision" },
     { href: "/privacy", label: "Privacy" },
   ],
+} as const;
+
+export const portrait = {
+  src: "/images/mrs-gill-portrait.jpg",
+  width: 1400,
+  height: 2099,
+  alt: "Mrs Gill standing in a garden beside white blossom, wearing a blue denim dress.",
 } as const;
 
 export function getSiteUrl(): string {
@@ -57,4 +65,4 @@ export function getEnquiryMailto(): string | null {
   return `mailto:${site.enquiryEmail}`;
 }
 
-export const routes = ["/", "/revision", "/privacy"] as const;
+export const routes = ["/", "/about", "/revision", "/privacy"] as const;

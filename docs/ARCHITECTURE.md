@@ -23,6 +23,7 @@ src/lib/content/       schema, seed mapping, accessors, store
 src/app/(marketing)/   public routes
 src/app/admin/         login + editor
 public/brand/          supplied artwork
+public/images/         professional portrait
 public/videos/         local YouTube thumbnails
 ```
 
@@ -36,7 +37,7 @@ Documented in `docs/adr/004-admin-content-management.md`.
 - Production: Vercel Blob `mrs-gill/site-content.json`
 - Production without a blob token: seed only, admin save fails closed
 
-After a save: `revalidateTag('site-content')` and `revalidatePath` for `/`, `/revision`, and `/privacy`. A full Vercel redeploy is not required for ordinary text changes.
+After a save: `revalidateTag('site-content')` and `revalidatePath` for `/`, `/about`, `/revision`, and `/privacy`. A full Vercel redeploy is not required for ordinary text changes.
 
 ## Auth
 

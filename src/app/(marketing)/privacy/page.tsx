@@ -57,9 +57,9 @@ export default async function PrivacyPage() {
           ) : (
             <p>
               The legal privacy controller details are not published yet. When
-              Issy confirms a contact address and legal name, they will be added
-              here. Until then, treat this page as a description of what the site
-              actually does, not as a full controller notice.
+              a contact address and trading name are confirmed, they will be
+              added here. Until then, treat this page as a description of what
+              the site actually does, not as a full controller notice.
             </p>
           )}
           <p>

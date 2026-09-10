@@ -46,8 +46,7 @@ export default function OpenGraphImage() {
               maxWidth: 900,
             }}
           >
-            Key Stage 3 and GCSE English tutoring, plus free Edexcel
-            literature revision.
+            Building confidence in English, for the classroom and beyond.
           </div>
         </div>
         <div style={{ fontSize: 28, color: "#6B5344" }}>

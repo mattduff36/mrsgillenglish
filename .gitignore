@@ -40,6 +40,9 @@ yarn-error.log*
 # local content store
 .data/
 
+# client originals — never commit
+/private/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

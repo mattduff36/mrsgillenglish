@@ -9,8 +9,8 @@ export default async function HomepageEditorPage() {
     <div>
       <h1 className="font-display text-3xl font-semibold">Homepage</h1>
       <p className="mt-3 mb-8 text-parchment/75">
-        These are the main public sentences. Keep them in Issy&apos;s classroom
-        voice.
+        These are the main public sentences. Keep them in Mrs Gill&apos;s
+        classroom voice.
       </p>
       <AdminForm action={saveHomepageAction}>
         <Field label="Hero heading" name="heroHeading" defaultValue={homepage.heroHeading} required />
@@ -24,7 +24,7 @@ export default async function HomepageEditorPage() {
           label="Main button destination"
           name="primaryCtaHref"
           defaultValue={homepage.primaryCtaHref}
-          hint="Usually /revision"
+          hint="Usually a mailto: enquiry address, or /revision"
         />
         <Field
           label="Second button label"

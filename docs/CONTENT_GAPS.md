@@ -1,23 +1,20 @@
 # Content gaps
 
-Facts that must not be invented. Ask Issy using `docs/client/ISSY-WEBSITE-FOLLOW-UP.html`, then enter confirmed answers in `/admin`.
+Facts that must not be invented. Ask using `docs/client/ISSY-WEBSITE-FOLLOW-UP.html`, then enter confirmed answers in `/admin`.
 
-## Needed before a confident public launch
+## Needed before attaching a custom domain
 
-1. **Contact route** - business email, or another official enquiry destination. Without this, parents cannot enquire from the site.
-2. **Custom domain** - the GoDaddy name. Do not guess it. DNS stays untouched until she confirms.
-3. **Online, in person, or both** - and a service area if in person.
-4. **Whether paid GCSE tuition follows Edexcel only**, or other boards too.
-5. **Privacy controller details** - legal name and contact for the privacy page beyond the public brand name.
+1. **Custom domain** - the GoDaddy name. The questionnaire deferred this to Matt and Andy. Do not guess it. DNS stays untouched until the name is confirmed.
+
+## Confirm before publishing
+
+2. **DBS and safeguarding** - a DBS check is in place for school work, and yearly safeguarding training was mentioned as possibly worth stating. Do not publish either until she confirms exact private-tuition wording.
 
 ## Useful later
 
-- Prices, session length, group size, availability
-- Booking preference (email, form, or a named tool)
+- Testimonials (none supplied yet; do not invent)
+- Booking preference beyond email (a form or calendar later)
 - Cancellation policy
-- Full biography, qualifications, years of teaching
-- DBS and safeguarding wording she is willing to publish
-- Approved testimonials (no pupil surnames or photos)
-- Preferred Key Stage 3 emphasis
-- Whether she wants downloadable resources or a `/resources` area
+- Resources or a `/resources` area (left for later)
+- Automatic highlighting of new YouTube videos
 - Analytics decision (none in V1)

@@ -142,6 +142,35 @@ export const literatureTextSchema = z
   })
   .strict();
 
+export const offerFocusSchema = z
+  .object({
+    id: z.string().regex(/^[\w-]{2,40}$/),
+    label: safeText(80),
+    enabled: z.boolean(),
+    order: z.number().int().min(0).max(100),
+  })
+  .strict();
+
+export const tutoredTextSchema = z
+  .object({
+    id: z.string().regex(/^[\w-]{2,40}$/),
+    title: safeText(80),
+    note: optionalText(240),
+    enabled: z.boolean(),
+    order: z.number().int().min(0).max(100),
+  })
+  .strict();
+
+export const aboutSectionSchema = z
+  .object({
+    id: z.string().regex(/^[\w-]{2,40}$/),
+    heading: safeText(120),
+    body: safeText(1600),
+    enabled: z.boolean(),
+    order: z.number().int().min(0).max(100),
+  })
+  .strict();
+
 export const siteContentSchema = z
   .object({
     version: z.literal(1),
@@ -196,6 +225,9 @@ export const siteContentSchema = z
       })
       .strict(),
     credentials: z.array(credentialSchema).max(12),
+    offerFocuses: z.array(offerFocusSchema).max(20).default([]),
+    tutoredTexts: z.array(tutoredTextSchema).max(20).default([]),
+    aboutSections: z.array(aboutSectionSchema).max(12).default([]),
     services: z.array(serviceSchema).max(12),
     videos: z.array(videoSchema).max(40),
     literatureTexts: z.array(literatureTextSchema).max(8),

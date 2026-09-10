@@ -19,7 +19,7 @@ describe("optional public features", () => {
   });
 
   it("lists only public routes in the sitemap helper", () => {
-    assert.deepEqual([...routes], ["/", "/revision", "/privacy"]);
+    assert.deepEqual([...routes], ["/", "/about", "/revision", "/privacy"]);
     assert.ok(!routes.includes("/admin" as (typeof routes)[number]));
   });
 

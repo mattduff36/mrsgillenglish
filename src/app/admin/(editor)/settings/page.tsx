@@ -27,7 +27,7 @@ export default async function SettingsPage() {
           name="enquiryEmail"
           type="email"
           defaultValue={site.enquiryEmail}
-          hint="Leave blank until Issy wants enquiries on the site."
+          hint="Leave blank to hide the enquire button."
         />
         <Field
           label="Public phone number"
@@ -60,7 +60,7 @@ export default async function SettingsPage() {
           label="Town or area shown on the site"
           name="serviceArea"
           defaultValue={site.serviceArea}
-          hint="A town or area is enough. Do not publish a private home address unless Issy asks."
+          hint="A town or area is enough. Do not publish a private home address unless asked."
         />
         <Field
           label="Availability wording"

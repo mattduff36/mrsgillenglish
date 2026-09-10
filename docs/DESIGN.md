@@ -7,9 +7,12 @@ Source of truth for the visual system. Colours were sampled from the supplied Yo
 | File | Size | Role |
 | --- | --- | --- |
 | `public/brand/youtube-banner.jpg` | 1060x175 | Palette, literary still-life, wordmark evidence |
-| `public/brand/youtube-profile.jpg` | 160x160 | Portrait mark, header, about, social |
+| `public/brand/youtube-profile.jpg` | 160x160 | Illustrated portrait mark, header, hero |
+| `public/images/mrs-gill-portrait.jpg` | 1400x2099 | Professional photograph on About and the home About teaser |
 
-Both files are small. Do not upscale them into full-bleed heroes. Use the portrait near native scale. Use the banner as a crop, frieze, or colour source.
+The YouTube files are small. Do not upscale them into full-bleed heroes. Use the illustrated portrait near native scale. Show the banner as a complete centred frieze at its intrinsic width (max 1060px), not a cropped 64px strip.
+
+The professional photograph is a different register: warmer, contemporary, for tutoring trust. Use it in a rounded parchment panel. Do not crop it into a circle; the garden pose loses the blossom and shoulders.
 
 ## What the images show
 
@@ -62,4 +65,4 @@ The banner uses a bold serif for "Mrs Gill". That is brand evidence, not a gener
 
 ## Motifs allowed
 
-A thin brass rule, a book-spine stripe, the real portrait, a tight banner crop. Not a stack of quills, candles, and exam papers on every section.
+A thin brass rule, a book-spine stripe, the illustrated portrait mark, the professional photograph, the full banner frieze. Not a stack of quills, candles, and exam papers on every section.

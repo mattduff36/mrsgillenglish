@@ -1,6 +1,6 @@
 # Mrs Gill English
 
-Website for **Mrs Gill English**: Key Stage 3 and GCSE English tutoring, with a home for Issy's YouTube revision videos.
+Website for **Mrs Gill English**: Key Stage 3 and GCSE English tutoring, with a home for the YouTube revision videos.
 
 The public YouTube channel is [Mrs Gill the English Teacher](https://www.youtube.com/@MrsGillEnglish). The website brand is **Mrs Gill English**.
 
@@ -44,8 +44,9 @@ src/app/admin        protected site editor
 src/lib/content      schema, seed, store
 src/content          seed facts for the first version
 public/brand         YouTube banner and profile
+public/images        professional portrait
 public/videos        local video thumbnails
-docs/client          Issy follow-up document
+docs/client          follow-up document
 docs/adr             architecture decisions
 ```
 
@@ -53,12 +54,12 @@ docs/adr             architecture decisions
 
 Normal updates go through `/admin`, not through React components.
 
-1. Issy answers `docs/client/ISSY-WEBSITE-FOLLOW-UP.html`
+1. New facts are confirmed in writing
 2. Matt signs in at `/admin`
 3. Matt enters only confirmed facts
 4. The public site refreshes after save
 
-Leave pricing, enquiry, and testimonials empty until Issy supplies real values. The pages hide those sections automatically.
+A stored content document overrides the TypeScript seed. After changing the seed, replace `.data/site-content.json` locally or the production Blob object, or delete it so the site falls back to the seed. Leave testimonials empty until approved wording exists.
 
 ## Brand assets
 

@@ -216,7 +216,7 @@ export async function saveServicesAction(
         id: `service-${Date.now()}`,
         title: "New tutoring offer",
         summary: "Short summary",
-        detail: "Add the public description once Issy has confirmed it.",
+        detail: "Add the public description once it has been confirmed.",
         price: "",
         priceSuffix: "",
         duration: "",
@@ -337,7 +337,7 @@ export async function saveCredentialsAction(
       credentials.push({
         id: `cred-${Date.now()}`,
         label: "New detail",
-        detail: "Add the public wording once Issy has confirmed it.",
+        detail: "Add the public wording once it has been confirmed.",
         enabled: false,
         order: credentials.length,
       });
@@ -347,5 +347,105 @@ export async function saveCredentialsAction(
       order,
     }));
     return { ...current, credentials: ordered };
+  });
+}
+
+export async function saveAboutSectionsAction(
+  _state: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  return persist((current) => {
+    const count = Number(field(formData, "count"));
+    const aboutSections = [];
+    for (let index = 0; index < count; index += 1) {
+      if (field(formData, `remove-${index}`) === "1") continue;
+      aboutSections.push({
+        id: field(formData, `id-${index}`) || `about-${index + 1}`,
+        heading: field(formData, `heading-${index}`),
+        body: field(formData, `body-${index}`),
+        enabled: formData.get(`enabled-${index}`) === "on",
+        order: aboutSections.length,
+      });
+    }
+    if (field(formData, "add") === "1") {
+      aboutSections.push({
+        id: `about-${Date.now()}`,
+        heading: "New section",
+        body: "Add the public wording once it has been confirmed.",
+        enabled: false,
+        order: aboutSections.length,
+      });
+    }
+    const ordered = applyMove(aboutSections, field(formData, "move")).map((item, order) => ({
+      ...item,
+      order,
+    }));
+    return { ...current, aboutSections: ordered };
+  });
+}
+
+export async function saveOfferFocusesAction(
+  _state: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  return persist((current) => {
+    const count = Number(field(formData, "count"));
+    const offerFocuses = [];
+    for (let index = 0; index < count; index += 1) {
+      if (field(formData, `remove-${index}`) === "1") continue;
+      offerFocuses.push({
+        id: field(formData, `id-${index}`) || `focus-${index + 1}`,
+        label: field(formData, `label-${index}`),
+        enabled: formData.get(`enabled-${index}`) === "on",
+        order: offerFocuses.length,
+      });
+    }
+    if (field(formData, "add") === "1") {
+      offerFocuses.push({
+        id: `focus-${Date.now()}`,
+        label: "New focus",
+        enabled: false,
+        order: offerFocuses.length,
+      });
+    }
+    const ordered = applyMove(offerFocuses, field(formData, "move")).map((item, order) => ({
+      ...item,
+      order,
+    }));
+    return { ...current, offerFocuses: ordered };
+  });
+}
+
+export async function saveTutoredTextsAction(
+  _state: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  return persist((current) => {
+    const count = Number(field(formData, "count"));
+    const tutoredTexts = [];
+    for (let index = 0; index < count; index += 1) {
+      if (field(formData, `remove-${index}`) === "1") continue;
+      tutoredTexts.push({
+        id: field(formData, `id-${index}`) || `text-${index + 1}`,
+        title: field(formData, `title-${index}`),
+        note: field(formData, `note-${index}`),
+        enabled: formData.get(`enabled-${index}`) === "on",
+        order: tutoredTexts.length,
+      });
+    }
+    if (field(formData, "add") === "1") {
+      tutoredTexts.push({
+        id: `text-${Date.now()}`,
+        title: "New text",
+        note: "",
+        enabled: false,
+        order: tutoredTexts.length,
+      });
+    }
+    const ordered = applyMove(tutoredTexts, field(formData, "move")).map((item, order) => ({
+      ...item,
+      order,
+    }));
+    return { ...current, tutoredTexts: ordered };
   });
 }

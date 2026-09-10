@@ -10,15 +10,14 @@ export type PublicVideo = Pick<
 
 type VideoCardProps = {
   video: PublicVideo;
-  featured?: boolean;
 };
 
-export function VideoCard({ video, featured = false }: VideoCardProps) {
+export function VideoCard({ video }: VideoCardProps) {
   const href = youtubeWatchUrl(video.id);
   const remote = videoThumbnailPath(video.id).startsWith("https://");
 
   return (
-    <article className={featured ? "md:col-span-2" : ""}>
+    <article>
       <a
         href={href}
         className="group block rounded-xl focus-visible:outline-offset-4"
@@ -29,8 +28,8 @@ export function VideoCard({ video, featured = false }: VideoCardProps) {
           <Image
             src={videoThumbnailPath(video.id)}
             alt=""
-            width={featured ? 960 : 480}
-            height={featured ? 540 : 270}
+            width={480}
+            height={270}
             unoptimized={remote}
             className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
           />
@@ -45,17 +44,9 @@ export function VideoCard({ video, featured = false }: VideoCardProps) {
             {topicLabels[video.topic]}
             {video.focus === "exam-method" ? " · exam method" : ""}
           </p>
-          <h3
-            className={`mt-1 font-display font-semibold text-navy group-hover:underline ${
-              featured ? "text-2xl leading-snug" : "text-lg leading-snug"
-            }`}
-          >
+          <h3 className="mt-1 font-display text-lg font-semibold leading-snug text-navy group-hover:underline">
             {video.title}
-            <ArrowUpRight
-              className="ml-1 inline align-text-top"
-              size={featured ? 20 : 16}
-              aria-hidden
-            />
+            <ArrowUpRight className="ml-1 inline align-text-top" size={16} aria-hidden />
           </h3>
           <p className="mt-2 text-sm text-ink-soft">
             Opens on YouTube

@@ -32,6 +32,7 @@ export async function saveSiteContent(input: unknown): Promise<SiteContent> {
   await writeStoredContent(content);
   revalidateTag(CONTENT_TAG, "max");
   revalidatePath("/", "layout");
+  revalidatePath("/about");
   revalidatePath("/revision");
   revalidatePath("/privacy");
   return content;

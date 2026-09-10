@@ -27,22 +27,33 @@ describe("T-public-seed-renders", () => {
   it("keeps the first-version copy and brand", () => {
     const content = createSeedContent();
     assert.equal(content.site.name, "Mrs Gill English");
-    assert.match(content.homepage.heroHeading, /English that holds up/);
+    assert.match(content.homepage.heroHeading, /Building confidence in English/);
+    assert.equal(content.site.enquiryEmail, "mrsgillenglishteacher@gmail.com");
     assert.equal(content.services.length, 4);
     assert.equal(content.videos.length, 16);
+    assert.equal(content.aboutSections.length, 4);
     assert.equal(content.testimonials.length, 0);
-    assert.equal(content.features.showPricing, false);
+    assert.equal(content.features.showPricing, true);
     assert.equal(content.features.showTestimonials, false);
+    assert.match(content.homepage.heroSupporting, /KS3 and GCSE\.$/);
+    assert.equal(content.homepage.heroSupporting.includes("plus free Edexcel"), false);
   });
 });
 
 describe("T-optional-hidden", () => {
-  it("hides enquiry, prices, testimonials and empty video grids", () => {
+  it("hides enquiry, prices, testimonials and empty video grids when switched off", () => {
     const content = createSeedContent();
-    assert.equal(getEnquiryHref(content), null);
-    assert.equal(getPricedServices(content).length, 0);
+    assert.ok(getEnquiryHref(content)?.startsWith("mailto:"));
+    assert.ok(getPricedServices(content).length >= 1);
     assert.equal(getVisibleTestimonials(content).length, 0);
     assert.ok(getVisibleVideos(content).length > 0);
+
+    const hiddenOffer = {
+      ...content,
+      features: { ...content.features, enableEnquiry: false, showPricing: false },
+    };
+    assert.equal(getEnquiryHref(hiddenOffer), null);
+    assert.equal(getPricedServices(hiddenOffer).length, 0);
 
     const hiddenVideos = {
       ...content,
@@ -99,6 +110,21 @@ describe("T-admin-auth-allows", () => {
   it("accepts a signed-in admin session", () => {
     const session = assertAdminSession({ user: { email: "admin@localhost" } });
     assert.equal(session.user?.email, "admin@localhost");
+  });
+});
+
+describe("T-schema-additive-defaults", () => {
+  it("fills missing list fields on older stored documents", () => {
+    const content = createSeedContent();
+    const parsed = siteContentSchema.parse({
+      ...content,
+      offerFocuses: undefined,
+      tutoredTexts: undefined,
+      aboutSections: undefined,
+    });
+    assert.deepEqual(parsed.offerFocuses, []);
+    assert.deepEqual(parsed.tutoredTexts, []);
+    assert.deepEqual(parsed.aboutSections, []);
   });
 });
 
@@ -221,6 +247,7 @@ describe("T-cache-refresh-after-save", () => {
     );
     assert.match(source, /revalidateTag\(CONTENT_TAG, "max"\)/);
     assert.match(source, /revalidatePath\("\/", "layout"\)/);
+    assert.match(source, /revalidatePath\("\/about"\)/);
   });
 });
 

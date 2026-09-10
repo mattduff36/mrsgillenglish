@@ -1,3 +1,4 @@
+import { aboutSections as seedAboutSections, credentials as seedCredentials, offerFocuses as seedFocuses, tutoredTexts as seedTutoredTexts } from "@/content/profile";
 import { services as seedServices } from "@/content/services";
 import { site as seedSite } from "@/content/site";
 import { literatureTexts as seedTexts } from "@/content/texts";
@@ -12,7 +13,7 @@ export function createSeedContent(): SiteContent {
       youtubeName: seedSite.youtubeName,
       tagline: seedSite.tagline,
       shortDescription: seedSite.shortDescription,
-      locale: "en-GB",
+      locale: seedSite.locale,
       enquiryEmail: seedSite.enquiryEmail,
       phone: seedSite.phone,
       bookingUrl: seedSite.bookingUrl,
@@ -24,41 +25,60 @@ export function createSeedContent(): SiteContent {
       playlists: [...seedSite.youtube.playlists],
       navigation: [...seedSite.navigation],
       footerNavigation: [...seedSite.footerNavigation],
-      lessonFormat: null,
-      serviceArea: null,
-      availability: null,
-      contactPreference: null,
+      lessonFormat: "both",
+      serviceArea: "Stoke-by-Clare and the surrounding area",
+      availability: "Weekday evenings, by arrangement",
+      contactPreference:
+        "For younger pupils, a parent or guardian should usually make the first contact.",
     },
     homepage: {
-      heroHeading: "English that holds up in class and in the exam.",
-      heroSupporting:
-        "One-to-one and small-group tuition for KS3 and GCSE, plus free Edexcel literature revision.",
-      primaryCtaLabel: "Browse revision videos",
-      primaryCtaHref: "/revision",
-      secondaryCtaLabel: "How tutoring works",
-      secondaryCtaHref: "#tutoring",
+      heroHeading: "Building confidence in English, for the classroom and beyond.",
+      heroSupporting: "One-to-one and small-group tuition for KS3 and GCSE.",
+      primaryCtaLabel: "Enquire about tutoring",
+      primaryCtaHref: `mailto:${seedSite.enquiryEmail}`,
+      secondaryCtaLabel: "Browse revision videos",
+      secondaryCtaHref: "/revision",
       tutoringHeading: "Tutoring for the years that matter.",
       tutoringIntro:
-        "Issy offers English tutoring with a first focus on Key Stage 3 and GCSE. Lessons are intended as one-to-one or small groups. Prices and session length will appear here when they are confirmed.",
+        "Mrs Gill offers English tutoring for Key Stage 3 and GCSE Language and Literature. Lessons are one-to-one or in small groups, online or in person around Stoke-by-Clare. After you enquire, she replies by email and confirms the details by hand. Closer to exams, intensive or revision-focused sessions can be arranged.",
       textsHeading: "Texts already taught on the revision channel.",
       textsIntro:
         "These are the Edexcel GCSE English Literature texts with dedicated videos and playlists. They describe the channel, not a closed list for every paid lesson.",
       videosHeading: "Start with a revision video.",
       videosIntro:
         "Short, practical lessons on quotations, context, character and exam paragraphs. PETAL, PEER and PETER are taught as methods, not magic formulas.",
-      aboutHeading: "Mrs Gill's English classroom, on the page.",
+      aboutHeading: "About Mrs Gill",
       aboutShort:
-        "The YouTube channel introduces itself as a space for English revision and exam preparation, with a specialism in Edexcel GCSE content. Videos cover key texts and themes, exam strategy, grammar and writing advice, model answers, and quizzes.",
+        "With 15 years experience teaching English, I am passionate in helping young people become more confident, capable and independent learners. I offer expert, personalised tuition for students who are keen to strengthen skills and achieve their goals.",
       aboutLong:
-        "This website keeps that classroom voice and adds the tutoring offer Issy asked to advertise: Key Stage 3, GCSE, one-to-one and small groups. A longer biography will be added when she supplies it. Qualifications and school history are not guessed.",
+        "I hold a degree and PGCE in English and Drama, and have taught GCSE English across a range of exam boards, including AQA and Edexcel.",
       enquiryFallback:
-        "A public enquiry address is not on the site yet. Until then, the surest next step is the revision library, or the YouTube channel itself.",
+        "The public enquiry address is not published at the moment. The revision library and the YouTube channel remain available.",
       resourcesTeaser: null,
       revisionHeading: "Revision that shows you how to answer.",
       revisionIntro:
         "These videos are from Mrs Gill the English Teacher. They focus on Edexcel GCSE English Literature: set texts, quotations, context, and paragraph methods such as PETAL, PEER and PETER. Thumbnails stay on this site. Each title opens on YouTube.",
     },
-    credentials: [],
+    credentials: seedCredentials.map((item, order) => ({
+      ...item,
+      enabled: true,
+      order,
+    })),
+    offerFocuses: seedFocuses.map((item, order) => ({
+      ...item,
+      enabled: true,
+      order,
+    })),
+    tutoredTexts: seedTutoredTexts.map((item, order) => ({
+      ...item,
+      enabled: true,
+      order,
+    })),
+    aboutSections: seedAboutSections.map((item, order) => ({
+      ...item,
+      enabled: true,
+      order,
+    })),
     services: seedServices.map((service, order) => ({
       ...service,
       priceSuffix: null,
@@ -87,7 +107,7 @@ export function createSeedContent(): SiteContent {
         "Curated Edexcel GCSE English Literature revision from Mrs Gill English: A Christmas Carol, Macbeth, Coram Boy, Belonging poetry, and exam methods.",
     },
     features: {
-      showPricing: false,
+      showPricing: true,
       showTestimonials: false,
       showAbout: true,
       showVideos: true,
@@ -95,8 +115,8 @@ export function createSeedContent(): SiteContent {
       showResourcesTeaser: false,
     },
     privacy: {
-      controllerName: null,
-      controllerEmail: null,
+      controllerName: seedSite.name,
+      controllerEmail: seedSite.enquiryEmail,
     },
   };
 

@@ -27,9 +27,16 @@ export function ButtonLink({
 }: ButtonLinkProps) {
   const classes = `inline-flex min-h-11 items-center justify-center rounded-lg px-5 py-2.5 text-base font-semibold transition-colors ${variants[variant]} ${className}`;
 
-  if (external) {
+  const offSite = external || /^(mailto:|tel:|https?:)/i.test(href);
+
+  if (offSite) {
     return (
-      <a href={href} className={classes} rel="noreferrer noopener" target="_blank">
+      <a
+        href={href}
+        className={classes}
+        rel={external ? "noreferrer noopener" : undefined}
+        target={external ? "_blank" : undefined}
+      >
         {children}
       </a>
     );

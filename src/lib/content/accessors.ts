@@ -52,7 +52,9 @@ export function getEnquiryHref(content: SiteContent): string | null {
 export function getPublicNavigation(content: SiteContent) {
   return content.site.navigation.filter((item) => {
     const href = item.href.toLowerCase();
-    if (href.includes("#about") && !content.features.showAbout) return false;
+    if ((href.includes("#about") || href === "/about") && !content.features.showAbout) {
+      return false;
+    }
     if (href.includes("/revision") && !content.features.showVideos) return false;
     return Boolean(item.href.trim() && item.label.trim());
   });
@@ -95,6 +97,24 @@ export function getVisibleTestimonials(content: SiteContent) {
 export function getVisibleCredentials(content: SiteContent) {
   return [...content.credentials]
     .filter((item) => item.enabled && item.label.trim() && item.detail.trim())
+    .sort((a, b) => a.order - b.order);
+}
+
+export function getVisibleOfferFocuses(content: SiteContent) {
+  return [...content.offerFocuses]
+    .filter((item) => item.enabled && item.label.trim())
+    .sort((a, b) => a.order - b.order);
+}
+
+export function getVisibleTutoredTexts(content: SiteContent) {
+  return [...content.tutoredTexts]
+    .filter((item) => item.enabled && item.title.trim())
+    .sort((a, b) => a.order - b.order);
+}
+
+export function getVisibleAboutSections(content: SiteContent) {
+  return [...content.aboutSections]
+    .filter((item) => item.enabled && item.heading.trim() && item.body.trim())
     .sort((a, b) => a.order - b.order);
 }
 

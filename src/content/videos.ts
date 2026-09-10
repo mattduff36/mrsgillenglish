@@ -42,7 +42,6 @@ export const videos: Video[] = [
     topic: "christmas-carol",
     focus: "exam-method",
     duration: "4:34",
-    featured: true,
   },
   {
     id: "elxR1iNle1w",
@@ -122,11 +121,20 @@ export const videos: Video[] = [
     duration: "12:25",
   },
   {
+    id: "Jbd5sRUKOVs",
+    title: "Macbeth: how to answer part A with PETAL",
+    topic: "macbeth",
+    focus: "exam-method",
+    duration: "5:01",
+    featured: true,
+  },
+  {
     id: "XH8lv1R4x_w",
     title: "Macbeth: how to answer Paper 1 part B with PEER",
     topic: "macbeth",
     focus: "exam-method",
     duration: "5:22",
+    featured: true,
   },
   {
     id: "hrplR6RdUW0",
@@ -134,13 +142,6 @@ export const videos: Video[] = [
     topic: "coram-boy",
     focus: "character",
     duration: "6:34",
-  },
-  {
-    id: "Jbd5sRUKOVs",
-    title: "Macbeth: how to answer part A with PETAL",
-    topic: "macbeth",
-    focus: "exam-method",
-    duration: "5:01",
   },
   {
     id: "E_wrk0jbVWg",

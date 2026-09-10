@@ -1,6 +1,6 @@
 # Product
 
-Mrs Gill English is Issy's public website for English tutoring and a home for her existing YouTube revision work.
+Mrs Gill English is the public website for English tutoring and a home for the existing YouTube revision work.
 
 ## Audiences
 
@@ -10,34 +10,33 @@ Mrs Gill English is Issy's public website for English tutoring and a home for he
 ## V1 jobs
 
 1. Name the brand as Mrs Gill English.
-2. State that Issy offers English tutoring for Key Stage 3 and GCSE.
-3. State that tuition is intended as one-to-one and small groups.
+2. State that Mrs Gill offers English tutoring for Key Stage 3 and GCSE.
+3. State that tuition is one-to-one or small groups, online or in person around Stoke-by-Clare.
 4. Send pupils to real revision videos from the YouTube channel.
 5. Feel trustworthy without selling hard or inventing credentials.
-6. Leave an obvious place for an enquiry route once a contact method exists.
+6. Let parents enquire by email.
 
 ## Information architecture
 
-Research found enough verified revision material for a dedicated page, but not enough verified biography, pricing, or contact detail for extra thin pages.
-
 | Route | Why it exists |
 | --- | --- |
-| `/` | Offer, tutoring formats, literature focus, featured videos, short introduction |
+| `/` | Offer, tutoring formats, prices, location, literature focus, featured videos, short introduction |
+| `/about` | Biography, qualifications, teaching approach, professional portrait |
 | `/revision` | Curated Edexcel literature and exam-technique videos, grouped by real playlists |
 | `/privacy` | Education-aware privacy notice. No tracking in V1 |
 
-Not created in V1: `/about`, `/tutoring`, `/contact`, `/pricing`, `/booking`. Those would be thin or would require invented facts. Their content lives on the home page or in the content layer until there is enough to justify a route.
+Not created: `/tutoring`, `/contact`, `/pricing`, `/booking`. Those would split the enquiry path. Their content lives on the home page.
 
 ## Primary actions
 
-- **Browse revision videos** is the current primary action. The destination is verified.
-- **Enquire about tutoring** appears only when a public email is set in `/admin`.
+- **Enquire about tutoring** is the primary action. It opens the public Gmail address.
+- **Browse revision videos** remains the secondary action. The destination is verified.
 - Booking is a future action, not a public control.
 
 ## Site editor
 
-`/admin` is a private editor for Matt (and later Issy). It is not part of the public information architecture.
+`/admin` is a private editor for Matt (and later Mrs Gill). It is not part of the public information architecture.
 
 ## Out of scope for V1
 
-Payments, pupil accounts, a booking calendar, downloadable resource hosting, analytics, and the unknown custom domain.
+Payments, pupil accounts, a booking calendar, downloadable resource hosting, analytics, and the unconfirmed custom domain.

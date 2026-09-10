@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { describe, it } from "node:test";
 import { publishedPrices, services } from "../src/content/services";
-import { getEnquiryMailto, routes, site } from "../src/content/site";
+import { getEnquiryMailto, portrait, routes, site } from "../src/content/site";
 import {
   videoFocuses,
   videoThumbnailPath,
@@ -18,20 +18,26 @@ describe("site content", () => {
     assert.notEqual(site.name, site.youtubeName);
   });
 
-  it("keeps enquiry unpublished until an email exists", () => {
-    assert.equal(site.enquiryEmail, null);
-    assert.equal(getEnquiryMailto(), null);
+  it("publishes the confirmed enquiry email", () => {
+    assert.equal(site.enquiryEmail, "mrsgillenglishteacher@gmail.com");
+    assert.equal(getEnquiryMailto(), "mailto:mrsgillenglishteacher@gmail.com");
   });
 
-  it("does not publish prices", () => {
-    assert.equal(publishedPrices.length, 0);
-    for (const service of services) {
-      assert.equal(service.price, null);
-    }
+  it("publishes the confirmed one-to-one price and keeps group price as an enquiry", () => {
+    assert.ok(publishedPrices.length >= 1);
+    const oneToOne = services.find((service) => service.id === "one-to-one");
+    const group = services.find((service) => service.id === "small-group");
+    assert.equal(oneToOne?.price, "£50 per hour");
+    assert.equal(group?.price, "To be discussed after enquiry");
   });
 
   it("lists the product routes", () => {
-    assert.deepEqual([...routes], ["/", "/revision", "/privacy"]);
+    assert.deepEqual([...routes], ["/", "/about", "/revision", "/privacy"]);
+  });
+
+  it("keeps a web-sized professional portrait on disk", () => {
+    const file = path.join(process.cwd(), "public", portrait.src.replace(/^\//, ""));
+    assert.ok(existsSync(file), `missing portrait ${file}`);
   });
 });
 
@@ -51,6 +57,11 @@ describe("video catalogue", () => {
       assert.ok(videoFocuses.includes(video.focus));
       assert.ok(video.title.length > 8);
     }
+  });
+
+  it("features the requested Macbeth Paper 1 films", () => {
+    const featured = videos.filter((video) => video.featured).map((video) => video.id);
+    assert.deepEqual(featured, ["Jbd5sRUKOVs", "XH8lv1R4x_w"]);
   });
 
   it("has a local thumbnail for every video", () => {
