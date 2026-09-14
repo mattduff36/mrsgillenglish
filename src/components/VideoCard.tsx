@@ -15,6 +15,11 @@ type VideoCardProps = {
 export function VideoCard({ video }: VideoCardProps) {
   const href = youtubeWatchUrl(video.id);
   const remote = videoThumbnailPath(video.id).startsWith("https://");
+  // Keep the external-link arrow tied to the last word so it never wraps
+  // onto a line of its own, which happens often at phone widths.
+  const words = video.title.split(" ");
+  const lastWord = words.pop() ?? "";
+  const leadingWords = words.length ? `${words.join(" ")} ` : "";
 
   return (
     <article>
@@ -45,8 +50,11 @@ export function VideoCard({ video }: VideoCardProps) {
             {video.focus === "exam-method" ? " · exam method" : ""}
           </p>
           <h3 className="mt-1 font-display text-lg font-semibold leading-snug text-navy group-hover:underline">
-            {video.title}
-            <ArrowUpRight className="ml-1 inline align-text-top" size={16} aria-hidden />
+            {leadingWords}
+            <span className="whitespace-nowrap">
+              {lastWord}
+              <ArrowUpRight className="ml-1 inline align-text-top" size={16} aria-hidden />
+            </span>
           </h3>
           <p className="mt-2 text-sm text-ink-soft">
             Opens on YouTube

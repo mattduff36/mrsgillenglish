@@ -43,25 +43,27 @@ export function HeroBlock({ content, section, headingLevel }: BlockProps<"hero">
 
   return (
     <section
-      className={surfaceClass(section.surface ?? "taupe", "border-b border-line pb-14 md:pb-20")}
+      className={surfaceClass(section.surface ?? "taupe", "border-b border-line pb-12 md:pb-20")}
     >
-      <div className="mx-auto w-full px-3 md:w-[88%] md:px-0">
+      <div className="mx-auto w-full md:w-[88%]">
         <div className="hero-banner-frame">
           <ContentImage
             src={heroBannerSrc(section.bannerSrc)}
             fallbackSrc={DEFAULT_HERO_BANNER}
             alt={section.bannerAlt}
             fill
-            className="object-cover object-[52%_center] md:object-center"
+            className="object-cover object-[55%_center] sm:object-center"
             sizes="(min-width: 768px) 88vw, 100vw"
             priority
           />
         </div>
-        <div className="relative z-10 mx-auto -mt-4 w-[94%] rounded-xl bg-parchment p-5 shadow-[0_18px_40px_-24px_rgb(28_36_51_/_0.45)] md:-mt-[6.4%] md:grid md:w-[75%] md:grid-cols-12 md:items-end md:gap-8 md:p-8">
-          <div className="md:col-span-8">
+        {/* The two-column plate needs real width, so it waits for lg; 768px
+            tablets keep the stacked treatment. */}
+        <div className="relative z-10 mx-auto -mt-8 w-[92%] rounded-2xl bg-parchment p-6 shadow-[0_18px_40px_-24px_rgb(28_36_51_/_0.45)] sm:w-[88%] md:-mt-12 md:w-[80%] md:p-8 lg:-mt-[6.4%] lg:grid lg:w-[90%] lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-10 lg:rounded-xl xl:w-[75%]">
+          <div>
             <Heading
               level={headingLevel}
-              className="max-w-xl font-display text-[1.75rem] font-semibold leading-[1.2] tracking-tight text-navy md:text-5xl md:leading-[1.15]"
+              className="max-w-xl font-display text-[1.75rem] font-semibold leading-[1.15] tracking-tight text-navy sm:text-[2rem] md:text-4xl lg:text-[2.25rem] xl:text-5xl"
             >
               {section.heading}
             </Heading>
@@ -73,21 +75,24 @@ export function HeroBlock({ content, section, headingLevel }: BlockProps<"hero">
               primaryHref={primaryHref}
               secondaryLabel={section.secondaryCtaLabel}
               secondaryHref={secondaryHref}
-              className="mt-5 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap [&_a]:w-full sm:[&_a]:w-auto"
+              className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap [&_a]:w-full sm:[&_a]:w-auto"
             />
           </div>
-          <figure className="mt-5 flex items-center gap-3 md:col-span-4 md:mt-0 md:justify-end md:gap-4">
+          {/* The banner carries the same name and channel title, so this only
+              appears once there is room for it beside the headline. */}
+          <figure className="hidden items-center gap-4 lg:flex lg:justify-end">
             <ContentImage
               src={section.profileSrc}
               fallbackSrc="/brand/youtube-profile.jpg"
               alt={section.profileAlt}
               width={80}
               height={80}
-              className="size-14 rounded-full object-cover md:size-20"
-              priority
+              className="size-16 rounded-full object-cover xl:size-20"
             />
             <figcaption>
-              <p className="font-display text-xl font-semibold text-navy">{content.site.name}</p>
+              <p className="font-display text-lg font-semibold text-navy xl:text-xl">
+                {content.site.name}
+              </p>
               <p className="mt-1 text-sm text-ink-soft">{content.site.youtubeName}</p>
             </figcaption>
           </figure>
@@ -108,17 +113,17 @@ export function TextImageBlock({ content, section, headingLevel }: BlockProps<"t
       id={sectionAnchor(section.anchor)}
       className={surfaceClass(section.surface, "scroll-mt-24 py-16 md:py-24")}
     >
-      <Container className="grid items-start gap-10 md:grid-cols-12">
+      <Container className="grid items-start gap-8 md:grid-cols-12 md:gap-10">
         <div className={imageLeft ? "md:col-span-4 md:col-start-1" : "md:col-span-4 md:col-start-9"}>
-          <figure className="overflow-hidden rounded-xl bg-page shadow-[0_18px_40px_-24px_rgb(28_36_51_/_0.45)]">
+          <figure className="aspect-[4/3] overflow-hidden rounded-xl bg-page shadow-[0_18px_40px_-24px_rgb(28_36_51_/_0.45)] sm:aspect-[3/2] md:aspect-auto">
             <ContentImage
               src={section.imageSrc}
               fallbackSrc="/images/mrs-gill-portrait.jpg"
               alt={section.imageAlt}
               width={1400}
               height={2099}
-              className="h-auto w-full"
-              sizes="(min-width: 768px) 320px, 90vw"
+              className="h-full w-full object-cover object-[center_22%] md:h-auto md:object-center"
+              sizes="(min-width: 768px) 320px, 100vw"
             />
           </figure>
         </div>
@@ -133,11 +138,13 @@ export function TextImageBlock({ content, section, headingLevel }: BlockProps<"t
             <Paragraphs body={section.body} className="leading-relaxed" />
           </div>
           {credentials.length ? (
-            <ul className="mt-6 space-y-2 text-ink-soft">
+            <ul className="mt-6 max-w-[62ch] divide-y divide-line overflow-hidden rounded-xl border border-line">
               {credentials.map((item) => (
-                <li key={item.id}>
-                  <span className="font-semibold text-navy">{item.label}: </span>
-                  {item.detail}
+                <li key={item.id} className="px-4 py-3 sm:flex sm:gap-4 sm:px-5">
+                  <span className="block font-semibold text-navy sm:w-44 sm:shrink-0">
+                    {item.label}
+                  </span>
+                  <span className="mt-0.5 block text-ink-soft sm:mt-0">{item.detail}</span>
                 </li>
               ))}
             </ul>
@@ -149,6 +156,7 @@ export function TextImageBlock({ content, section, headingLevel }: BlockProps<"t
             secondaryHref={section.secondaryCtaHref}
             primaryVariant="secondary"
             secondaryVariant="ghost"
+            className="mt-8 flex flex-col items-start gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
           />
         </div>
       </Container>
@@ -168,6 +176,11 @@ export function TutoringBlock({ content, section, headingLevel }: BlockProps<"tu
   const format = content.site.lessonFormat
     ? lessonFormatLabels[content.site.lessonFormat]
     : null;
+  const lessonMeta = [
+    { label: "Lessons", value: format },
+    { label: "Area", value: content.site.serviceArea },
+    { label: "Availability", value: content.site.availability },
+  ].filter((item): item is { label: string; value: string } => Boolean(item.value));
 
   return (
     <section
@@ -189,36 +202,47 @@ export function TutoringBlock({ content, section, headingLevel }: BlockProps<"tu
             <p className="mt-4 max-w-[62ch] text-lg leading-relaxed text-parchment/90">
               {section.intro}
             </p>
-            {section.showLessonMeta &&
-            (format || content.site.serviceArea || content.site.availability || content.site.contactPreference) ? (
-              <ul className="mt-5 max-w-[62ch] space-y-1 text-parchment/90">
-                {format ? <li>Lessons: {format}</li> : null}
-                {content.site.serviceArea ? <li>Area: {content.site.serviceArea}</li> : null}
-                {content.site.availability ? <li>Availability: {content.site.availability}</li> : null}
-                {content.site.contactPreference ? <li>{content.site.contactPreference}</li> : null}
-              </ul>
+            {section.showLessonMeta && lessonMeta.length ? (
+              <dl className="mt-6 max-w-[62ch] border-t border-brass/40">
+                {lessonMeta.map((item) => (
+                  <div
+                    key={item.label}
+                    className="border-b border-brass/40 py-3 sm:flex sm:gap-4"
+                  >
+                    <dt className="text-sm font-semibold uppercase tracking-wide text-parchment/70 sm:w-36 sm:shrink-0 sm:pt-0.5">
+                      {item.label}
+                    </dt>
+                    <dd className="mt-1 text-parchment sm:mt-0">{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : null}
+            {section.showLessonMeta && content.site.contactPreference ? (
+              <p className="mt-4 max-w-[62ch] text-parchment/85">
+                {content.site.contactPreference}
+              </p>
             ) : null}
 
             {enquiry ? (
-              <div className="mt-10">
-                <ButtonLink href={enquiry} variant="inverse">
+              <div className="mt-8">
+                <ButtonLink href={enquiry} variant="inverse" className="w-full sm:w-auto">
                   Enquire about tutoring
                 </ButtonLink>
               </div>
             ) : section.showEnquiry && content.features.enableEnquiry ? (
-              <p className="mt-10 max-w-[60ch] text-parchment/90">{section.enquiryFallback}</p>
+              <p className="mt-8 max-w-[60ch] text-parchment/90">{section.enquiryFallback}</p>
             ) : null}
           </div>
 
           <div className="hidden justify-center md:col-span-5 md:flex">
-            <figure className="size-72 shrink-0 overflow-hidden rounded-full bg-taupe sm:size-80 md:size-96">
+            <figure className="aspect-square w-full max-w-[16rem] overflow-hidden rounded-full bg-taupe lg:max-w-[24rem]">
               <ContentImage
                 src={tutoringIllustration.src}
                 alt={tutoringIllustration.alt}
                 width={tutoringIllustration.width}
                 height={tutoringIllustration.height}
                 className="h-full w-full scale-125 object-cover object-[center_58%]"
-                sizes="384px"
+                sizes="(min-width: 1024px) 384px, 256px"
               />
             </figure>
           </div>
@@ -298,21 +322,29 @@ export function VideosBlock({ content, section, headingLevel }: BlockProps<"vide
       className={surfaceClass(section.surface, "scroll-mt-24 py-16 md:py-24")}
     >
       <Container>
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        {/* Mobile reads heading, intro, then the link; from md the link moves
+            up beside the heading. */}
+        <div className="flex flex-col gap-4 md:grid md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-x-8">
           <Heading
             level={headingLevel}
-            className="max-w-xl font-display text-3xl font-semibold text-navy md:text-4xl"
+            className="order-1 max-w-xl font-display text-3xl font-semibold text-navy md:col-start-1 md:row-start-1 md:text-4xl"
           >
             {section.heading}
           </Heading>
+          <p className="order-2 max-w-[62ch] text-lg text-ink-soft md:col-start-1 md:row-start-2">
+            {section.intro}
+          </p>
           {section.showRevisionCta ? (
-            <ButtonLink href="/revision" variant="ghost">
+            <ButtonLink
+              href="/revision"
+              variant="ghost"
+              className="order-3 self-start md:col-start-2 md:row-start-1 md:self-end"
+            >
               All curated videos
             </ButtonLink>
           ) : null}
         </div>
-        <p className="mt-4 max-w-[62ch] text-lg text-ink-soft">{section.intro}</p>
-        <div className="mx-auto mt-10 grid max-w-4xl gap-8 sm:grid-cols-2">
+        <div className="mx-auto mt-8 grid max-w-4xl gap-7 sm:grid-cols-2 sm:gap-8 md:mt-10">
           {videos.map((video) => (
             <VideoCard key={video.id} video={video} />
           ))}

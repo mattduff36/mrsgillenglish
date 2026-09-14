@@ -37,10 +37,13 @@ export function SiteFooter({
         <div className="flex flex-col gap-6 sm:flex-row sm:gap-16">
           <nav aria-label="Footer">
             <p className="text-sm font-semibold text-brass">On this site</p>
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-2 space-y-1">
               {footerNavigation.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-parchment hover:underline">
+                  <Link
+                    href={item.href}
+                    className="inline-flex min-h-[1.75rem] items-center text-parchment hover:underline"
+                  >
                     {item.label}
                   </Link>
                 </li>

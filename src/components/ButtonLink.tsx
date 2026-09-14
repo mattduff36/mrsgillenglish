@@ -11,13 +11,15 @@ type ButtonLinkProps = {
 
 const variants = {
   primary:
-    "bg-navy text-navy-foreground hover:bg-navy-deep",
+    "px-5 bg-navy text-navy-foreground hover:bg-navy-deep",
   secondary:
-    "border border-navy bg-transparent text-navy hover:bg-navy hover:text-navy-foreground",
+    "px-5 border border-navy bg-transparent text-navy hover:bg-navy hover:text-navy-foreground",
+  // A text link, so it keeps the 44px touch target but sits flush with the
+  // text column rather than looking indented.
   ghost:
     "text-navy underline decoration-brass decoration-2 underline-offset-4 hover:text-navy-deep",
   inverse:
-    "bg-parchment text-navy hover:bg-page",
+    "px-5 bg-parchment text-navy hover:bg-page",
 };
 
 export function ButtonLink({
@@ -27,7 +29,7 @@ export function ButtonLink({
   external = false,
   className = "",
 }: ButtonLinkProps) {
-  const classes = `inline-flex min-h-11 items-center justify-center rounded-lg px-5 py-2.5 text-base font-semibold transition-colors ${variants[variant]} ${className}`;
+  const classes = `inline-flex min-h-11 items-center justify-center rounded-lg py-2.5 text-base font-semibold transition-colors ${variants[variant]} ${className}`;
 
   const offSite = external || /^(mailto:|tel:|https?:)/i.test(href);
 

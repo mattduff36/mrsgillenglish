@@ -38,11 +38,19 @@ body {
   outline-offset: 3px;
 }
 
+/* The banner artwork is 23:8. At phone widths that whole ratio collapses to a
+   sliver, so mobile crops into the illustration and wordmark instead. */
 .hero-banner-frame {
   position: relative;
   width: 100%;
   overflow: hidden;
-  aspect-ratio: 16 / 5;
+  aspect-ratio: 19 / 10;
+}
+
+@media (min-width: 640px) {
+  .hero-banner-frame {
+    aspect-ratio: 5 / 2;
+  }
 }
 
 @media (min-width: 768px) {
