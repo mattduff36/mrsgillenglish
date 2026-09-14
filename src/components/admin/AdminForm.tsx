@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useState, type ReactNode } from "react";
 import type { ActionState } from "@/app/admin/actions";
 
 const initial: ActionState = { ok: false, message: "" };
@@ -11,7 +11,7 @@ export function AdminForm({
   saveLabel = "Save changes",
 }: {
   action: (state: ActionState, formData: FormData) => Promise<ActionState>;
-  children: React.ReactNode;
+  children: ReactNode;
   saveLabel?: string;
 }) {
   const [state, formAction, pending] = useActionState(action, initial);
@@ -121,6 +121,34 @@ export function TextArea({
   );
 }
 
+export function Select({
+  label,
+  name,
+  defaultValue,
+  hint,
+  children,
+}: {
+  label: string;
+  name: string;
+  defaultValue?: string | null;
+  hint?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="block">
+      <span className="text-sm font-semibold text-parchment">{label}</span>
+      <select
+        name={name}
+        defaultValue={defaultValue ?? ""}
+        className="mt-1 w-full rounded-lg border border-white/15 bg-navy-deep px-3 py-2.5 text-parchment outline-none focus-visible:ring-2 focus-visible:ring-brass"
+      >
+        {children}
+      </select>
+      {hint ? <span className="mt-1 block text-sm text-parchment/65">{hint}</span> : null}
+    </label>
+  );
+}
+
 export function Toggle({
   label,
   name,
@@ -156,7 +184,7 @@ export function ConfirmSubmit({
 }: {
   name: string;
   value: string;
-  children: React.ReactNode;
+  children: ReactNode;
   message: string;
 }) {
   return (

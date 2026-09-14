@@ -1,4 +1,8 @@
-import type { SiteContent } from "./schema";
+import type {
+  PageKey,
+  PageSection,
+  SiteContent,
+} from "./schema";
 
 export const topicLabels = {
   "christmas-carol": "A Christmas Carol",
@@ -49,15 +53,46 @@ export function getEnquiryHref(content: SiteContent): string | null {
   return `mailto:${content.site.enquiryEmail}`;
 }
 
+function isAboutNav(href: string) {
+  const value = href.toLowerCase();
+  return value === "/about" || value.includes("#about");
+}
+
+function isRevisionNav(href: string) {
+  const value = href.toLowerCase();
+  return value === "/revision" || value.includes("#revision");
+}
+
+function isTutoringNav(href: string) {
+  return href.toLowerCase().includes("tutoring");
+}
+
+function homepageSectionHref(
+  item: SiteContent["site"]["navigation"][number],
+): SiteContent["site"]["navigation"][number] {
+  if (isAboutNav(item.href)) return { ...item, href: "/#about" };
+  if (isRevisionNav(item.href)) return { ...item, href: "/#revision" };
+  if (isTutoringNav(item.href)) return { ...item, href: "/#tutoring" };
+  return item;
+}
+
 export function getPublicNavigation(content: SiteContent) {
-  return content.site.navigation.filter((item) => {
+  const visible = content.site.navigation.filter((item) => {
     const href = item.href.toLowerCase();
-    if ((href.includes("#about") || href === "/about") && !content.features.showAbout) {
+    if (isAboutNav(href) && !content.features.showAbout) {
       return false;
     }
-    if (href.includes("/revision") && !content.features.showVideos) return false;
+    if (isRevisionNav(href) && !content.features.showVideos) return false;
     return Boolean(item.href.trim() && item.label.trim());
   });
+  const about = visible.filter((item) => isAboutNav(item.href));
+  const tutoring = visible.filter((item) => isTutoringNav(item.href));
+  const revision = visible.filter((item) => isRevisionNav(item.href));
+  const rest = visible.filter(
+    (item) =>
+      !isAboutNav(item.href) && !isRevisionNav(item.href) && !isTutoringNav(item.href),
+  );
+  return [...about, ...tutoring, ...revision, ...rest].map(homepageSectionHref);
 }
 
 export function getSafeHref(href: string | null | undefined): string | null {
@@ -88,7 +123,6 @@ export function getFeaturedVideos(content: SiteContent) {
 }
 
 export function getVisibleTestimonials(content: SiteContent) {
-  if (!content.features.showTestimonials) return [];
   return [...content.testimonials]
     .filter((item) => item.enabled && item.quote.trim() && item.attribution.trim())
     .sort((a, b) => a.order - b.order);
@@ -113,9 +147,170 @@ export function getVisibleTutoredTexts(content: SiteContent) {
 }
 
 export function getVisibleAboutSections(content: SiteContent) {
-  return [...content.aboutSections]
-    .filter((item) => item.enabled && item.heading.trim() && item.body.trim())
+  return content.pages.about.sections
+    .filter((section): section is Extract<PageSection, { type: "prose" }> => {
+      return (
+        section.type === "prose" &&
+        section.enabled &&
+        Boolean(section.heading?.trim() && section.body.trim())
+      );
+    })
     .sort((a, b) => a.order - b.order);
+}
+
+export function getVisiblePageSections(content: SiteContent, page: PageKey) {
+  return [...content.pages[page].sections]
+    .filter((section) => section.enabled)
+    .sort((a, b) => a.order - b.order);
+}
+
+function pickById<T>(
+  items: T[],
+  getId: (item: T) => string,
+  selection: "all" | "featured" | "picked",
+  itemIds: string[],
+  featured?: (item: T) => boolean,
+): T[] {
+  if (selection === "featured") {
+    return featured ? items.filter(featured) : items;
+  }
+  if (selection === "picked") {
+    const map = new Map(items.map((item) => [getId(item), item]));
+    return itemIds.map((id) => map.get(id)).filter((item): item is T => Boolean(item));
+  }
+  return items;
+}
+
+export function selectVideos(
+  content: SiteContent,
+  selection: "all" | "featured" | "picked",
+  itemIds: string[],
+) {
+  return pickById(getVisibleVideos(content), (video) => video.id, selection, itemIds, (video) => video.featured);
+}
+
+export function selectTestimonials(
+  content: SiteContent,
+  selection: "all" | "picked",
+  itemIds: string[],
+) {
+  return pickById(getVisibleTestimonials(content), (item) => item.id, selection, itemIds);
+}
+
+export function selectCredentials(
+  content: SiteContent,
+  selection: "all" | "picked" = "all",
+  itemIds: string[] = [],
+) {
+  return pickById(getVisibleCredentials(content), (item) => item.id, selection, itemIds);
+}
+
+export function selectServices(
+  content: SiteContent,
+  selection: "all" | "picked",
+  itemIds: string[],
+) {
+  return pickById(getVisibleServices(content), (item) => item.id, selection, itemIds);
+}
+
+export function selectOfferFocuses(
+  content: SiteContent,
+  selection: "all" | "picked",
+  itemIds: string[],
+) {
+  return pickById(getVisibleOfferFocuses(content), (item) => item.id, selection, itemIds);
+}
+
+export function selectTutoredTexts(
+  content: SiteContent,
+  selection: "all" | "picked",
+  itemIds: string[],
+) {
+  return pickById(getVisibleTutoredTexts(content), (item) => item.id, selection, itemIds);
+}
+
+export function selectLiteratureTexts(
+  content: SiteContent,
+  selection: "all" | "picked",
+  itemIds: string[],
+) {
+  const items = content.literatureTexts.filter((item) => item.title.trim());
+  return pickById(items, (item) => item.id, selection, itemIds);
+}
+
+export function selectPlaylists(
+  content: SiteContent,
+  selection: "all" | "picked",
+  itemIds: string[],
+) {
+  return pickById(content.site.playlists, (item) => item.url, selection, itemIds);
+}
+
+export function splitParagraphs(body: string) {
+  return body
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+}
+
+export function sectionHasContent(content: SiteContent, section: PageSection): boolean {
+  switch (section.type) {
+    case "hero":
+      return Boolean(section.heading.trim());
+    case "prose":
+      return Boolean(section.body.trim());
+    case "cta":
+      return Boolean(
+        section.heading?.trim() ||
+          section.body?.trim() ||
+          getSafeHref(section.primaryCtaHref) ||
+          getSafeHref(section.secondaryCtaHref),
+      );
+    case "textImage":
+      return Boolean(section.heading.trim() || section.body.trim());
+    case "imageBand":
+      return Boolean(section.imageSrc);
+    case "videos":
+      return selectVideos(content, section.selection, section.itemIds).length > 0;
+    case "testimonials":
+      return selectTestimonials(content, section.selection, section.itemIds).length > 0;
+    case "literatureTexts":
+      return selectLiteratureTexts(content, section.selection, section.itemIds).length > 0;
+    case "credentials":
+      return selectCredentials(content, section.selection, section.itemIds).length > 0;
+    case "tutoring":
+      return Boolean(section.heading.trim() || section.intro.trim());
+    case "playlists":
+      return selectPlaylists(content, section.selection, section.itemIds).length > 0;
+    case "revisionCatalogue":
+      return selectVideos(content, section.selection, section.itemIds).length > 0;
+    case "privacyContact":
+      return true;
+    default: {
+      const _never: never = section;
+      return Boolean(_never);
+    }
+  }
+}
+
+export function getRenderableSections(content: SiteContent, page: PageKey) {
+  return getVisiblePageSections(content, page).filter((section) =>
+    sectionHasContent(content, section),
+  );
+}
+
+export function getAboutDescription(content: SiteContent) {
+  const intro = content.pages.about.sections.find(
+    (section): section is Extract<PageSection, { type: "textImage" }> =>
+      section.type === "textImage" && section.enabled,
+  );
+  return intro?.body || content.seo.defaultDescription;
+}
+
+export function getHeroSection(content: SiteContent) {
+  return content.pages.home.sections.find(
+    (section): section is Extract<PageSection, { type: "hero" }> => section.type === "hero",
+  );
 }
 
 export function youtubeWatchUrl(id: string): string {

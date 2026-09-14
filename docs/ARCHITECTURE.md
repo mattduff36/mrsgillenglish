@@ -23,11 +23,11 @@ src/lib/content/       schema, seed mapping, accessors, store
 src/app/(marketing)/   public routes
 src/app/admin/         login + editor
 public/brand/          supplied artwork
-public/images/         professional portrait
+public/images/         professional portrait and still-life motif pack
 public/videos/         local YouTube thumbnails
 ```
 
-The public site and `/admin` both read `getSiteContent()`. That function returns the stored JSON when present, otherwise the seed.
+The public site and `/admin` both read `getSiteContent()`. That function returns the stored JSON when present, otherwise the seed. Stored version 1 documents are hydrated into version 2 page layouts on read. Public pages render `pages.*.sections` only.
 
 ## Persistence
 
@@ -68,4 +68,4 @@ The site does not use the YouTube Data API. Admin can paste a watch URL or video
 
 ## Media
 
-No upload product. Replacing the portrait or banner remains a developer change.
+No upload product and no Cloudinary. Admin may paste a `/images` or `/brand` path, or an https URL. Remote images render unoptimized and do not widen the Next.js image optimizer. Seed portrait and banner files remain in `public/`.

@@ -20,7 +20,7 @@ Mrs Gill English is the public website for English tutoring and a home for the e
 
 | Route | Why it exists |
 | --- | --- |
-| `/` | Offer, tutoring formats, prices, location, literature focus, featured videos, short introduction |
+| `/` | Short introduction, tutoring formats and location, then featured revision videos. Optional offer cards only if added in `/admin` |
 | `/about` | Biography, qualifications, teaching approach, professional portrait |
 | `/revision` | Curated Edexcel literature and exam-technique videos, grouped by real playlists |
 | `/privacy` | Education-aware privacy notice. No tracking in V1 |
@@ -36,6 +36,8 @@ Not created: `/tutoring`, `/contact`, `/pricing`, `/booking`. Those would split 
 ## Site editor
 
 `/admin` is a private editor for Matt (and later Mrs Gill). It is not part of the public information architecture.
+
+Each public page is a stack of sections from a fixed palette (hero, text, tutoring, videos, and so on). Shared catalogues hold videos, tutoring offers, testimonials, qualifications, channel texts, and playlists. Images are a `/images` or `/brand` path, or an https URL. There is no upload product and no Cloudinary.
 
 ## Out of scope for V1
 

@@ -14,7 +14,7 @@ npm run build
 
 ## What is covered
 
-- Seed brand, routes, published enquiry email and one-to-one price
+- Seed brand, routes, published enquiry email, and no default tutoring offer cards
 - Every curated seed video has an id, title, topic, and local thumbnail
 - Featured homepage videos are the two Macbeth Paper 1 films
 - Older stored documents still parse when the new About lists are missing

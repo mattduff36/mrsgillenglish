@@ -10,7 +10,8 @@ The public site and `/admin` share one Zod-validated `SiteContent` JSON document
 - **Persistence:** Vercel Blob, one private object `mrs-gill/site-content.json`. Local development writes `.data/site-content.json` (gitignored). Production without a blob token serves the TypeScript seed and refuses saves.
 - **Auth:** Auth.js v5 Credentials, JWT cookie, 12-hour session. Up to four admins, from `ADMIN_EMAIL_1`…`_4` and matching password hashes. Middleware uses a config file that does not import password hashing.
 - **Publishing:** Immediate save. No draft workflow.
-- **Media:** No uploads. Brand images and seed thumbnails stay in `public/`. New videos may use a YouTube thumbnail.
+- **Pages:** Version 2 documents store `pages.home|about|revision|privacy` as a discriminated section palette. Version 1 documents hydrate into that layout on read. A `rollback` mirror can down-convert to version 1.
+- **Media:** No uploads and no Cloudinary. Brand images and seed thumbnails stay in `public/`. Admin may paste a local `/images` or `/brand` path or an https URL. New videos may use a YouTube thumbnail.
 - **Cache:** Public reads use the `site-content` tag. A successful save revalidates that tag and the public routes.
 
 ## Why this, not the alternatives

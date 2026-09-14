@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { describe, it } from "node:test";
 import { publishedPrices, services } from "../src/content/services";
-import { getEnquiryMailto, portrait, routes, site } from "../src/content/site";
+import { getEnquiryMailto, portrait, routes, site, tutoringIllustration } from "../src/content/site";
 import {
   videoFocuses,
   videoThumbnailPath,
@@ -23,12 +23,9 @@ describe("site content", () => {
     assert.equal(getEnquiryMailto(), "mailto:mrsgillenglishteacher@gmail.com");
   });
 
-  it("publishes the confirmed one-to-one price and keeps group price as an enquiry", () => {
-    assert.ok(publishedPrices.length >= 1);
-    const oneToOne = services.find((service) => service.id === "one-to-one");
-    const group = services.find((service) => service.id === "small-group");
-    assert.equal(oneToOne?.price, "£50 per hour");
-    assert.equal(group?.price, "To be discussed after enquiry");
+  it("does not seed the retired tutoring offer cards", () => {
+    assert.equal(services.length, 0);
+    assert.equal(publishedPrices.length, 0);
   });
 
   it("lists the product routes", () => {
@@ -38,6 +35,11 @@ describe("site content", () => {
   it("keeps a web-sized professional portrait on disk", () => {
     const file = path.join(process.cwd(), "public", portrait.src.replace(/^\//, ""));
     assert.ok(existsSync(file), `missing portrait ${file}`);
+  });
+
+  it("keeps the tutoring desk illustration on disk", () => {
+    const file = path.join(process.cwd(), "public", tutoringIllustration.src.replace(/^\//, ""));
+    assert.ok(existsSync(file), `missing tutoring illustration ${file}`);
   });
 });
 

@@ -10,8 +10,9 @@ export default async function SettingsPage() {
     <div>
       <h1 className="font-display text-3xl font-semibold">General settings</h1>
       <p className="mt-3 mb-8 text-parchment/75">
-        These details appear in the header, footer and tutoring section when they
-        are filled in.
+        These details appear in the header, footer and tutoring blocks when they
+        are filled in. Testimonials and the resources note are switched on from
+        the Home layout, not from here.
       </p>
       <AdminForm action={saveSettingsAction}>
         <Field label="Public site name" name="name" defaultValue={site.name} required />
@@ -91,29 +92,21 @@ export default async function SettingsPage() {
             defaultChecked={content.features.showPricing}
           />
           <Toggle
-            label="Show testimonials when approved quotes exist"
-            name="showTestimonials"
-            defaultChecked={content.features.showTestimonials}
-          />
-          <Toggle
-            label="Show the About section"
+            label="Show About in the header"
             name="showAbout"
             defaultChecked={content.features.showAbout}
+            hint="This only controls the navigation link. Hide the About block on the Home layout if you want it off the homepage."
           />
           <Toggle
-            label="Show revision videos"
+            label="Show Revision in the header"
             name="showVideos"
             defaultChecked={content.features.showVideos}
+            hint="This only controls the navigation link. Video blocks have their own show switch."
           />
           <Toggle
             label="Show the enquiry button when an email exists"
             name="enableEnquiry"
             defaultChecked={content.features.enableEnquiry}
-          />
-          <Toggle
-            label="Show the resources note"
-            name="showResourcesTeaser"
-            defaultChecked={content.features.showResourcesTeaser}
           />
         </div>
       </AdminForm>

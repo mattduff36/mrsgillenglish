@@ -21,6 +21,7 @@ describe("optional public features", () => {
   it("lists only public routes in the sitemap helper", () => {
     assert.deepEqual([...routes], ["/", "/about", "/revision", "/privacy"]);
     assert.ok(!routes.includes("/admin" as (typeof routes)[number]));
+    assert.ok(!(routes as readonly string[]).includes("/demo-herp"));
   });
 
   it("tells crawlers to stay out of /admin", async () => {

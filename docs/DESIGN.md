@@ -7,10 +7,24 @@ Source of truth for the visual system. Colours were sampled from the supplied Yo
 | File | Size | Role |
 | --- | --- | --- |
 | `public/brand/youtube-banner.jpg` | 1060x175 | Palette, literary still-life, wordmark evidence |
+| `public/images/youtube-banner-wide.jpg` | 3180x525 | Sharper home-hero source of the same banner |
 | `public/brand/youtube-profile.jpg` | 160x160 | Illustrated portrait mark, header, hero |
 | `public/images/mrs-gill-portrait.jpg` | 1400x2099 | Professional photograph on About and the home About teaser |
+| `public/images/still-life/` | 1152x864 each | Hero-desk motif pack. Only `open-book-and-quill.png` is live. |
 
-The YouTube files are small. Do not upscale them into full-bleed heroes. Use the illustrated portrait near native scale. Show the banner as a complete centred frieze at its intrinsic width (max 1060px), not a cropped 64px strip.
+Pack files, unused unless a later section needs them:
+
+- `open-book.png`
+- `quill-and-ink.png`
+- `candle.png`
+- `closed-books.png`
+- `open-book-and-quill.png` (tutoring section)
+- `open-book-and-quill-badge.png`
+- `open-book-and-candle.png`
+- `quill-and-candle.png`
+- `closed-books-and-quill.png`
+
+The source YouTube files are small. Use `youtube-banner-wide.jpg` for the home hero so the crop stays sharp. The illustrated portrait stays near native scale in the header and on the overlapping plate. The home hero is a wide cropped banner (about 88% of the viewport) with a narrower parchment plate overlapping the lower edge, so the desk objects remain visible at the sides. Do not show the banner as a thin uncropped 64px strip.
 
 The professional photograph is a different register: warmer, contemporary, for tutoring trust. Use it in a rounded parchment panel. Do not crop it into a circle; the garden pose loses the blossom and shoulders.
 
@@ -19,6 +33,8 @@ The professional photograph is a different register: warmer, contemporary, for t
 Banner: illustrated woman in three-quarter view, dark curly updo, navy jacket, white ruffled blouse and bow, books with gold lettering, quills, candles, parchment, taupe outer field, serif "Mrs Gill" over "The English Teacher".
 
 Profile: same illustrated portrait, flat taupe ground, navy jacket, white pie-crust collar and bow, tan piping, silver earring. Clean cel-shaded illustration, academic rather than childish.
+
+Tutoring motif: same illustrated register as the banner, without a second portrait. One open book and one standing quill, shown as a large circle on the navy tutoring band. Other one- and two-object combinations from the banner desk sit unused in `public/images/still-life/`.
 
 Tone: classical, literary, professional, warm, secondary-school serious. Not corporate consultancy. Not primary-school cute.
 
@@ -65,4 +81,4 @@ The banner uses a bold serif for "Mrs Gill". That is brand evidence, not a gener
 
 ## Motifs allowed
 
-A thin brass rule, a book-spine stripe, the illustrated portrait mark, the professional photograph, the full banner frieze. Not a stack of quills, candles, and exam papers on every section.
+A thin brass rule, a book-spine stripe, the illustrated portrait mark, the professional photograph, the overlapping home-hero banner, and one still-life motif on the home tutoring band. Keep unused still-life files in `public/images/still-life/` until a later section needs them. Not a stack of quills, candles, and exam papers on every section.

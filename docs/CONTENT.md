@@ -10,15 +10,16 @@ Do not invent facts in either the seed or the admin fields.
 - English tutoring for Key Stage 3 and GCSE Language and Literature
 - One-to-one and small-group tuition, online or in person around Stoke-by-Clare
 - Public enquiry email: `mrsgillenglishteacher@gmail.com`
-- One-to-one price: £50 per hour. Small-group price discussed after enquiry
+- One-to-one price: £50 per hour. Small-group price discussed after enquiry. These prices are confirmed facts, but the four homepage offer cards were removed. Publish a price only if it is added again in `/admin`.
 - Paid lessons support Edexcel and AQA
 - YouTube revision for Edexcel GCSE English Literature
 - Channel texts: *A Christmas Carol*, *Macbeth*, *Coram Boy*, Belonging anthology poetry
-- Extra lesson texts: *An Inspector Calls*, *Lord of the Flies*, *Romeo and Juliet*, Power and Conflict poetry
+- Extra lesson texts: *An Inspector Calls*, *Lord of the Flies*, *Romeo and Juliet*, Power and Conflict poetry. These titles are confirmed, but the homepage "Also offered" chips and "Texts for paid lessons" list were removed. Publish them only if they are added again in `/admin`.
 - Exam methods named on the channel: PETAL, PEER and PETER
 - Published qualifications: BA (Hons) English and Drama; PGCE in English and Drama with QTS; 15 years teaching English
 - Biography and teaching-approach paragraphs supplied in her own words
 - Professional portrait at `public/images/mrs-gill-portrait.jpg`
+- Tutoring motif at `public/images/still-life/open-book-and-quill.png`, derived from the YouTube banner still-life. Spare combinations live in the same folder.
 - Channel About themes: revision, exam strategy, grammar and writing, model answers, quizzes (quizzes live on YouTube, not on this site yet)
 
 Address her as **Mrs Gill** on public pages. Do not use a first name in visitor-facing copy.
@@ -34,7 +35,7 @@ Bad: "Unlock your child's limitless potential." Do not promise or guarantee grad
 
 1. Ask using `docs/client/ISSY-WEBSITE-FOLLOW-UP.html` if a new fact is needed
 2. Sign in to `/admin`
-3. Enter only confirmed wording
+3. Edit the page layout or a shared catalogue. Enter only confirmed wording.
 4. Save. The public pages read the same document.
 
 The TypeScript files remain the seed and the recovery source if the stored document is deleted.

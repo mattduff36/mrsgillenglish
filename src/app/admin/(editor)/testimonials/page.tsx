@@ -16,9 +16,9 @@ export default async function TestimonialsEditorPage() {
     <div>
       <h1 className="font-display text-3xl font-semibold">Testimonials</h1>
       <p className="mt-3 mb-8 text-parchment/75">
-        Only add wording Issy has permission to publish. Never invent a quote.
-        Switch the testimonials section on in settings once at least one approved
-        quote is ready.
+        Shared catalogue for any Testimonials section. Only add wording Issy has
+        permission to publish. Never invent a quote. Switch the section on in the
+        Home layout once at least one approved quote is ready.
       </p>
       <AdminForm action={saveTestimonialsAction}>
         <input type="hidden" name="count" value={content.testimonials.length} />

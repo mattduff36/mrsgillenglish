@@ -7,7 +7,7 @@ import {
   isProduction,
 } from "./config";
 import { createSeedContent } from "./seed";
-import { siteContentSchema, type SiteContent } from "./schema";
+import { parseSiteContent, type SiteContent } from "./schema";
 
 export const BLOB_PATH = "mrs-gill/site-content.json";
 
@@ -48,7 +48,7 @@ async function readBlob(): Promise<SiteContent | null> {
   }
   if (!result) return null;
   const text = await new Response(result.stream).text();
-  return siteContentSchema.parse(JSON.parse(text));
+  return parseSiteContent(JSON.parse(text));
 }
 
 async function writeBlob(content: SiteContent): Promise<void> {
@@ -63,7 +63,7 @@ async function writeBlob(content: SiteContent): Promise<void> {
 async function readLocal(): Promise<SiteContent | null> {
   try {
     const text = await readFile(/* turbopackIgnore: true */ localContentPath(), "utf8");
-    return siteContentSchema.parse(JSON.parse(text));
+    return parseSiteContent(JSON.parse(text));
   } catch (error) {
     if (isMissingContentError(error)) return null;
     throw error;

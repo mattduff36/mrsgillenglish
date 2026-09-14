@@ -3,12 +3,15 @@ import { logoutAction } from "@/app/admin/actions";
 
 const links = [
   { href: "/admin", label: "Overview" },
-  { href: "/admin/settings", label: "General settings" },
-  { href: "/admin/homepage", label: "Homepage" },
+  { href: "/admin/home", label: "Home" },
   { href: "/admin/about", label: "About" },
+  { href: "/admin/revision", label: "Revision" },
+  { href: "/admin/privacy", label: "Privacy" },
   { href: "/admin/services", label: "Tutoring" },
   { href: "/admin/videos", label: "Videos" },
   { href: "/admin/testimonials", label: "Testimonials" },
+  { href: "/admin/texts", label: "Channel texts" },
+  { href: "/admin/settings", label: "General settings" },
   { href: "/admin/seo", label: "Search listings" },
 ];
 
@@ -68,7 +71,7 @@ export function AdminShell({
           </div>
         </aside>
         <main id="admin-main" className="px-4 py-8 sm:px-8">
-          <div className="mx-auto max-w-3xl">{children}</div>
+          <div className="mx-auto max-w-4xl">{children}</div>
         </main>
       </div>
     </div>

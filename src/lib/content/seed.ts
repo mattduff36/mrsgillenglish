@@ -3,10 +3,10 @@ import { services as seedServices } from "@/content/services";
 import { site as seedSite } from "@/content/site";
 import { literatureTexts as seedTexts } from "@/content/texts";
 import { videos as seedVideos } from "@/content/videos";
-import { siteContentSchema, type SiteContent } from "./schema";
+import { parseSiteContent, type SiteContent, type V1SiteContent } from "./schema";
 
-export function createSeedContent(): SiteContent {
-  const content: SiteContent = {
+export function createV1SeedInput(): V1SiteContent {
+  return {
     version: 1,
     site: {
       name: seedSite.name,
@@ -96,7 +96,10 @@ export function createSeedContent(): SiteContent {
       enabled: true,
       order,
     })),
-    literatureTexts: [...seedTexts],
+    literatureTexts: seedTexts.map((item) => ({
+      ...item,
+      id: item.topic,
+    })),
     testimonials: [],
     seo: {
       defaultTitle: `${seedSite.name} | KS3 and GCSE English tutoring`,
@@ -119,6 +122,8 @@ export function createSeedContent(): SiteContent {
       controllerEmail: seedSite.enquiryEmail,
     },
   };
+}
 
-  return siteContentSchema.parse(content);
+export function createSeedContent(): SiteContent {
+  return parseSiteContent(createV1SeedInput());
 }

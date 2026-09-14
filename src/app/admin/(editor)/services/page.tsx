@@ -20,6 +20,7 @@ export default async function ServicesEditorPage() {
     <div className="space-y-12">
       <h1 className="font-display text-3xl font-semibold">Tutoring offers</h1>
       <p className="mt-3 mb-8 text-parchment/75">
+        Shared catalogue for any Tutoring section. There are no default cards.
         Switch an offer off to hide it. Leave price blank to keep a card without
         a public price, and turn on pricing in settings.
       </p>
@@ -81,7 +82,8 @@ export default async function ServicesEditorPage() {
       <section>
         <h2 className="font-display text-2xl">Also offered</h2>
         <p className="mt-2 mb-6 text-parchment/70">
-          Short labels shown under the tutoring cards. Switch one off to hide it.
+          Short labels shown under the tutoring section. There are no default
+          labels. Switch one off to hide it.
         </p>
         <AdminForm action={saveOfferFocusesAction} saveLabel="Save focuses">
           <input type="hidden" name="count" value={content.offerFocuses.length} />
@@ -124,8 +126,8 @@ export default async function ServicesEditorPage() {
       <section>
         <h2 className="font-display text-2xl">Texts for paid lessons</h2>
         <p className="mt-2 mb-6 text-parchment/70">
-          Extra literature titles beyond the YouTube channel list. Do not add a
-          video link unless one exists.
+          Extra literature titles beyond the YouTube channel list. There are no
+          default extra titles. Do not add a video link unless one exists.
         </p>
         <AdminForm action={saveTutoredTextsAction} saveLabel="Save texts">
           <input type="hidden" name="count" value={content.tutoredTexts.length} />

@@ -16,23 +16,9 @@ export const credentials = [
   },
 ] as const;
 
-export const offerFocuses = [
-  { id: "exam-technique", label: "Exam technique" },
-  { id: "creative-writing", label: "Creative writing" },
-  { id: "transactional-writing", label: "Transactional writing" },
-  { id: "reading-comprehension", label: "Reading comprehension" },
-  { id: "grammar", label: "Grammar, spelling and punctuation" },
-  { id: "revision-planning", label: "Revision planning" },
-  { id: "homework", label: "Homework support" },
-  { id: "confidence", label: "Confidence-building" },
-] as const;
+export const offerFocuses: { id: string; label: string }[] = [];
 
-export const tutoredTexts = [
-  { id: "inspector-calls", title: "An Inspector Calls", note: null },
-  { id: "lord-of-the-flies", title: "Lord of the Flies", note: null },
-  { id: "romeo-and-juliet", title: "Romeo and Juliet", note: null },
-  { id: "power-and-conflict", title: "Power and Conflict poetry", note: null },
-] as const;
+export const tutoredTexts: { id: string; title: string; note: string | null }[] = [];
 
 export const aboutSections = [
   {

@@ -44,7 +44,7 @@ src/app/admin        protected site editor
 src/lib/content      schema, seed, store
 src/content          seed facts for the first version
 public/brand         YouTube banner and profile
-public/images        professional portrait
+public/images        professional portrait and still-life motif pack
 public/videos        local video thumbnails
 docs/client          follow-up document
 docs/adr             architecture decisions

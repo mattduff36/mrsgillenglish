@@ -4,7 +4,9 @@ import { AuthError } from "next-auth";
 import { ZodError } from "zod";
 import { signIn, signOut } from "@/auth";
 import { requireAdmin } from "@/lib/auth/guard";
-import { parseYoutubeId, siteContentSchema, type SiteContent } from "@/lib/content/schema";
+import { createSeedContent } from "@/lib/content/seed";
+import { parsePageKey, parseSectionsFormData } from "@/lib/content/sections-form";
+import { parseSiteContent, parseYoutubeId, type SiteContent } from "@/lib/content/schema";
 import {
   canPersistContent,
   isAuthConfigured,
@@ -24,7 +26,7 @@ async function persist(patch: (current: SiteContent) => unknown): Promise<Action
   }
   try {
     const current = await readSiteContentFresh();
-    const next = siteContentSchema.parse(patch(current));
+    const next = parseSiteContent(patch(current));
     await saveSiteContent(next);
     return { ok: true, message: "Saved. The public site will refresh shortly." };
   } catch (error) {
@@ -94,11 +96,11 @@ export async function saveSettingsAction(
     },
     features: {
       showPricing: formData.get("showPricing") === "on",
-      showTestimonials: formData.get("showTestimonials") === "on",
+      showTestimonials: current.features.showTestimonials,
       showAbout: formData.get("showAbout") === "on",
       showVideos: formData.get("showVideos") === "on",
       enableEnquiry: formData.get("enableEnquiry") === "on",
-      showResourcesTeaser: formData.get("showResourcesTeaser") === "on",
+      showResourcesTeaser: current.features.showResourcesTeaser,
     },
     privacy: {
       controllerName: String(formData.get("controllerName") ?? ""),
@@ -107,51 +109,27 @@ export async function saveSettingsAction(
   }));
 }
 
-export async function saveHomepageAction(
+export async function savePageLayoutAction(
   _state: ActionState,
   formData: FormData,
 ): Promise<ActionState> {
-  return persist((current) => ({
-    ...current,
-    homepage: {
-      ...current.homepage,
-      heroHeading: String(formData.get("heroHeading") ?? ""),
-      heroSupporting: String(formData.get("heroSupporting") ?? ""),
-      primaryCtaLabel: String(formData.get("primaryCtaLabel") ?? ""),
-      primaryCtaHref: String(formData.get("primaryCtaHref") ?? ""),
-      secondaryCtaLabel: String(formData.get("secondaryCtaLabel") ?? ""),
-      secondaryCtaHref: String(formData.get("secondaryCtaHref") ?? ""),
-      tutoringHeading: String(formData.get("tutoringHeading") ?? ""),
-      tutoringIntro: String(formData.get("tutoringIntro") ?? ""),
-      textsHeading: String(formData.get("textsHeading") ?? ""),
-      textsIntro: String(formData.get("textsIntro") ?? ""),
-      videosHeading: String(formData.get("videosHeading") ?? ""),
-      videosIntro: String(formData.get("videosIntro") ?? ""),
-      aboutHeading: String(formData.get("aboutHeading") ?? ""),
-      aboutShort: String(formData.get("aboutShort") ?? ""),
-      aboutLong: String(formData.get("aboutLong") ?? ""),
-      enquiryFallback: String(formData.get("enquiryFallback") ?? ""),
-      resourcesTeaser: String(formData.get("resourcesTeaser") ?? ""),
-      revisionHeading: String(formData.get("revisionHeading") ?? ""),
-      revisionIntro: String(formData.get("revisionIntro") ?? ""),
-    },
-  }));
-}
-
-export async function saveAboutAction(
-  _state: ActionState,
-  formData: FormData,
-): Promise<ActionState> {
-  return persist((current) => ({
-    ...current,
-    homepage: {
-      ...current.homepage,
-      aboutHeading: String(formData.get("aboutHeading") ?? ""),
-      aboutShort: String(formData.get("aboutShort") ?? ""),
-      aboutLong: String(formData.get("aboutLong") ?? ""),
-    },
-    credentials: current.credentials,
-  }));
+  return persist((current) => {
+    const page = parsePageKey(field(formData, "page"));
+    if (field(formData, "reset") === "1") {
+      const seed = createSeedContent();
+      return {
+        ...current,
+        pages: { ...current.pages, [page]: seed.pages[page] },
+      };
+    }
+    return {
+      ...current,
+      pages: {
+        ...current.pages,
+        [page]: { sections: parseSectionsFormData(formData) },
+      },
+    };
+  });
 }
 
 export async function saveSeoAction(
@@ -350,37 +328,57 @@ export async function saveCredentialsAction(
   });
 }
 
-export async function saveAboutSectionsAction(
+export async function savePlaylistsAction(
   _state: ActionState,
   formData: FormData,
 ): Promise<ActionState> {
   return persist((current) => {
     const count = Number(field(formData, "count"));
-    const aboutSections = [];
+    const playlists = [];
     for (let index = 0; index < count; index += 1) {
       if (field(formData, `remove-${index}`) === "1") continue;
-      aboutSections.push({
-        id: field(formData, `id-${index}`) || `about-${index + 1}`,
-        heading: field(formData, `heading-${index}`),
-        body: field(formData, `body-${index}`),
-        enabled: formData.get(`enabled-${index}`) === "on",
-        order: aboutSections.length,
+      playlists.push({
+        title: field(formData, `title-${index}`),
+        url: field(formData, `url-${index}`),
       });
     }
     if (field(formData, "add") === "1") {
-      aboutSections.push({
-        id: `about-${Date.now()}`,
-        heading: "New section",
-        body: "Add the public wording once it has been confirmed.",
-        enabled: false,
-        order: aboutSections.length,
+      playlists.push({
+        title: "New playlist",
+        url: current.site.youtubePlaylistsUrl,
       });
     }
-    const ordered = applyMove(aboutSections, field(formData, "move")).map((item, order) => ({
-      ...item,
-      order,
-    }));
-    return { ...current, aboutSections: ordered };
+    return { ...current, site: { ...current.site, playlists } };
+  });
+}
+
+export async function saveLiteratureTextsAction(
+  _state: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  return persist((current) => {
+    const count = Number(field(formData, "count"));
+    const literatureTexts = [];
+    for (let index = 0; index < count; index += 1) {
+      if (field(formData, `remove-${index}`) === "1") continue;
+      const topic = field(formData, `topic-${index}`) || "christmas-carol";
+      literatureTexts.push({
+        id: field(formData, `id-${index}`) || topic,
+        topic,
+        title: field(formData, `title-${index}`),
+        note: field(formData, `note-${index}`),
+      });
+    }
+    if (field(formData, "add") === "1") {
+      literatureTexts.push({
+        id: `text-${Date.now().toString(36)}`,
+        topic: "christmas-carol",
+        title: "New text",
+        note: "Add the public wording once it has been confirmed.",
+      });
+    }
+    const ordered = applyMove(literatureTexts, field(formData, "move"));
+    return { ...current, literatureTexts: ordered };
   });
 }
 

@@ -36,9 +36,9 @@ export const site = {
     ],
   },
   navigation: [
+    { href: "/#about", label: "About" },
     { href: "/#tutoring", label: "Tutoring" },
-    { href: "/revision", label: "Revision" },
-    { href: "/about", label: "About" },
+    { href: "/#revision", label: "Revision" },
   ],
   footerNavigation: [
     { href: "/", label: "Home" },
@@ -53,6 +53,13 @@ export const portrait = {
   width: 1400,
   height: 2099,
   alt: "Mrs Gill standing in a garden beside white blossom, wearing a blue denim dress.",
+} as const;
+
+export const tutoringIllustration = {
+  src: "/images/still-life/open-book-and-quill.png",
+  width: 1152,
+  height: 864,
+  alt: "Illustrated still-life of an open book and a quill, in the same style as the Mrs Gill English YouTube artwork.",
 } as const;
 
 export function getSiteUrl(): string {

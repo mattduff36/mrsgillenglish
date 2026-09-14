@@ -8,6 +8,7 @@ import { assertAdminSession } from "../src/lib/auth/session";
 import {
   getEnquiryHref,
   getPricedServices,
+  getPublicNavigation,
   getSafeHref,
   getVisibleTestimonials,
   getVisibleVideos,
@@ -19,38 +20,93 @@ import {
   persistenceMode,
 } from "../src/lib/content/config";
 import { readStoredContent, writeStoredContent } from "../src/lib/content/io";
-import { parseYoutubeId, siteContentSchema } from "../src/lib/content/schema";
-import { createSeedContent } from "../src/lib/content/seed";
+import { parseSiteContent, parseYoutubeId, siteContentSchema } from "../src/lib/content/schema";
+import { createSeedContent, createV1SeedInput } from "../src/lib/content/seed";
+import { getHeroSection } from "../src/lib/content/accessors";
 import { serializeJsonLd } from "../src/lib/json-ld";
 
 describe("T-public-seed-renders", () => {
   it("keeps the first-version copy and brand", () => {
     const content = createSeedContent();
     assert.equal(content.site.name, "Mrs Gill English");
-    assert.match(content.homepage.heroHeading, /Building confidence in English/);
+    const hero = getHeroSection(content);
+    assert.match(hero?.heading ?? "", /Building confidence in English/);
     assert.equal(content.site.enquiryEmail, "mrsgillenglishteacher@gmail.com");
-    assert.equal(content.services.length, 4);
+    assert.equal(content.services.length, 0);
+    assert.equal(content.offerFocuses.length, 0);
+    assert.equal(content.tutoredTexts.length, 0);
     assert.equal(content.videos.length, 16);
-    assert.equal(content.aboutSections.length, 4);
+    assert.equal(content.pages.about.sections.filter((section) => section.type === "prose").length, 4);
     assert.equal(content.testimonials.length, 0);
     assert.equal(content.features.showPricing, true);
     assert.equal(content.features.showTestimonials, false);
-    assert.match(content.homepage.heroSupporting, /KS3 and GCSE\.$/);
-    assert.equal(content.homepage.heroSupporting.includes("plus free Edexcel"), false);
+    assert.match(hero?.supporting ?? "", /KS3 and GCSE\.$/);
+    assert.equal(hero?.supporting.includes("plus free Edexcel"), false);
+    assert.deepEqual(
+      getPublicNavigation(content).map((item) => [item.label, item.href]),
+      [
+        ["About", "/#about"],
+        ["Tutoring", "/#tutoring"],
+        ["Revision", "/#revision"],
+      ],
+    );
+  });
+});
+
+describe("T-public-nav-order", () => {
+  it("puts About, Tutoring, then Revision on homepage hashes even if stored nav is older", () => {
+    const content = createSeedContent();
+    const reordered = getPublicNavigation({
+      ...content,
+      site: {
+        ...content.site,
+        navigation: [
+          { href: "/#tutoring", label: "Tutoring" },
+          { href: "/revision", label: "Revision" },
+          { href: "/about", label: "About" },
+        ],
+      },
+    });
+    assert.deepEqual(
+      reordered.map((item) => [item.label, item.href]),
+      [
+        ["About", "/#about"],
+        ["Tutoring", "/#tutoring"],
+        ["Revision", "/#revision"],
+      ],
+    );
   });
 });
 
 describe("T-optional-hidden", () => {
   it("hides enquiry, prices, testimonials and empty video grids when switched off", () => {
     const content = createSeedContent();
+    const priced = {
+      ...content,
+      services: [
+        {
+          id: "example-offer",
+          title: "Example offer",
+          summary: "Short summary",
+          detail: "Confirmed wording for a priced offer.",
+          price: "£50 per hour",
+          priceSuffix: null,
+          duration: null,
+          groupSize: null,
+          enabled: true,
+          order: 0,
+        },
+      ],
+    };
     assert.ok(getEnquiryHref(content)?.startsWith("mailto:"));
-    assert.ok(getPricedServices(content).length >= 1);
+    assert.equal(getPricedServices(content).length, 0);
+    assert.ok(getPricedServices(priced).length >= 1);
     assert.equal(getVisibleTestimonials(content).length, 0);
     assert.ok(getVisibleVideos(content).length > 0);
 
     const hiddenOffer = {
-      ...content,
-      features: { ...content.features, enableEnquiry: false, showPricing: false },
+      ...priced,
+      features: { ...priced.features, enableEnquiry: false, showPricing: false },
     };
     assert.equal(getEnquiryHref(hiddenOffer), null);
     assert.equal(getPricedServices(hiddenOffer).length, 0);
@@ -113,28 +169,115 @@ describe("T-admin-auth-allows", () => {
   });
 });
 
+describe("T-retired-offer-cards-removed", () => {
+  it("drops the retired tutoring offer, focus and extra-text ids from stored documents", () => {
+    const content = createSeedContent();
+    const parsed = parseSiteContent({
+      ...content,
+      services: [
+        {
+          id: "ks3",
+          title: "Key Stage 3 English",
+          summary: "Reading, writing and confidence before the GCSE years.",
+          detail: "Support for Years 7 to 9.",
+          price: null,
+          priceSuffix: null,
+          duration: null,
+          groupSize: null,
+          enabled: true,
+          order: 0,
+        },
+        {
+          id: "example-offer",
+          title: "Example offer",
+          summary: "A later offer added in admin.",
+          detail: "This one should remain.",
+          price: null,
+          priceSuffix: null,
+          duration: null,
+          groupSize: null,
+          enabled: true,
+          order: 1,
+        },
+      ],
+      offerFocuses: [
+        {
+          id: "exam-technique",
+          label: "Exam technique",
+          enabled: true,
+          order: 0,
+        },
+        {
+          id: "later-focus",
+          label: "A later focus",
+          enabled: true,
+          order: 1,
+        },
+      ],
+      tutoredTexts: [
+        {
+          id: "inspector-calls",
+          title: "An Inspector Calls",
+          note: null,
+          enabled: true,
+          order: 0,
+        },
+        {
+          id: "later-text",
+          title: "A later text",
+          note: null,
+          enabled: true,
+          order: 1,
+        },
+      ],
+    });
+    assert.deepEqual(
+      parsed.services.map((service) => service.id),
+      ["example-offer"],
+    );
+    assert.equal(parsed.services[0]?.order, 0);
+    assert.deepEqual(
+      parsed.offerFocuses.map((item) => item.id),
+      ["later-focus"],
+    );
+    assert.deepEqual(
+      parsed.tutoredTexts.map((item) => item.id),
+      ["later-text"],
+    );
+  });
+});
+
 describe("T-schema-additive-defaults", () => {
   it("fills missing list fields on older stored documents", () => {
-    const content = createSeedContent();
-    const parsed = siteContentSchema.parse({
-      ...content,
+    const v1 = createV1SeedInput();
+    const parsed = parseSiteContent({
+      ...v1,
       offerFocuses: undefined,
       tutoredTexts: undefined,
       aboutSections: undefined,
     });
     assert.deepEqual(parsed.offerFocuses, []);
     assert.deepEqual(parsed.tutoredTexts, []);
-    assert.deepEqual(parsed.aboutSections, []);
+    assert.equal(parsed.pages.about.sections.filter((section) => section.type === "prose").length, 0);
   });
 });
 
 describe("T-admin-validate-reject", () => {
   it("rejects unsafe text, bad emails and invented youtube ids", () => {
-    const content = createSeedContent();
+    const content = createV1SeedInput();
     assert.equal(
       siteContentSchema.safeParse({
-        ...content,
-        homepage: { ...content.homepage, heroHeading: "<script>alert(1)</script>" },
+        ...parseSiteContent(content),
+        pages: {
+          ...parseSiteContent(content).pages,
+          home: {
+            sections: parseSiteContent(content).pages.home.sections.map((section) =>
+              section.type === "hero"
+                ? { ...section, heading: "<script>alert(1)</script>" }
+                : section,
+            ),
+          },
+        },
       }).success,
       false,
     );
@@ -156,7 +299,7 @@ describe("T-xss-escaped", () => {
     const content = createSeedContent();
     const result = siteContentSchema.safeParse({
       ...content,
-      homepage: { ...content.homepage, aboutShort: "Hello javascript:alert(1)" },
+      seo: { ...content.seo, defaultDescription: "Hello javascript:alert(1)" },
     });
     assert.equal(result.success, false);
     assert.equal(
@@ -175,9 +318,8 @@ describe("T-xss-escaped", () => {
 describe("T-admin-toggle-hides", () => {
   it("hides testimonials unless the section is on and a quote exists", () => {
     const content = createSeedContent();
-    const withQuote = {
+    const withQuote = parseSiteContent({
       ...content,
-      features: { ...content.features, showTestimonials: true },
       testimonials: [
         {
           id: "quote-1",
@@ -188,15 +330,35 @@ describe("T-admin-toggle-hides", () => {
           order: 0,
         },
       ],
-    };
+      pages: {
+        ...content.pages,
+        home: {
+          sections: content.pages.home.sections.map((section) =>
+            section.type === "testimonials" ? { ...section, enabled: true } : section,
+          ),
+        },
+      },
+    });
     assert.equal(getVisibleTestimonials(withQuote).length, 1);
+    const hiddenSection = withQuote.pages.home.sections.find(
+      (section) => section.type === "testimonials",
+    );
+    assert.ok(hiddenSection && hiddenSection.type === "testimonials");
     assert.equal(
       getVisibleTestimonials({
         ...withQuote,
-        features: { ...withQuote.features, showTestimonials: false },
+        pages: {
+          ...withQuote.pages,
+          home: {
+            sections: withQuote.pages.home.sections.map((section) =>
+              section.type === "testimonials" ? { ...section, enabled: false } : section,
+            ),
+          },
+        },
       }).length,
-      0,
+      1,
     );
+    assert.equal(hiddenSection.enabled, true);
   });
 });
 
@@ -224,15 +386,25 @@ describe("T-admin-save-persists", () => {
     process.env.CONTENT_DATA_PATH = file;
     try {
       const seed = createSeedContent();
-      const next = siteContentSchema.parse({
+      const next = parseSiteContent({
         ...seed,
-        homepage: { ...seed.homepage, heroHeading: "English, clearly explained." },
+        pages: {
+          ...seed.pages,
+          home: {
+            sections: seed.pages.home.sections.map((section) =>
+              section.type === "hero"
+                ? { ...section, heading: "English, clearly explained." }
+                : section,
+            ),
+          },
+        },
       });
       await writeStoredContent(next);
       const stored = JSON.parse(await readFile(file, "utf8"));
-      assert.equal(stored.homepage.heroHeading, "English, clearly explained.");
+      const storedHero = stored.pages.home.sections.find((section: { type: string }) => section.type === "hero");
+      assert.equal(storedHero.heading, "English, clearly explained.");
       const fresh = await readStoredContent();
-      assert.equal(fresh.homepage.heroHeading, "English, clearly explained.");
+      assert.equal(getHeroSection(fresh)?.heading, "English, clearly explained.");
     } finally {
       process.env.CONTENT_DATA_PATH = previous;
       await rm(folder, { recursive: true, force: true });

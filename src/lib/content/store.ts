@@ -7,7 +7,7 @@ import {
   persistenceMode,
 } from "./config";
 import { readStoredContent, writeStoredContent } from "./io";
-import { siteContentSchema, type SiteContent } from "./schema";
+import { parseSiteContent, type SiteContent } from "./schema";
 
 export const CONTENT_TAG = "site-content";
 
@@ -28,7 +28,7 @@ export async function getSiteContent(): Promise<SiteContent> {
 }
 
 export async function saveSiteContent(input: unknown): Promise<SiteContent> {
-  const content = siteContentSchema.parse(input);
+  const content = parseSiteContent(input);
   await writeStoredContent(content);
   revalidateTag(CONTENT_TAG, "max");
   revalidatePath("/", "layout");

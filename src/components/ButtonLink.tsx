@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 type ButtonLinkProps = {
   href: string;
   children: ReactNode;
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary" | "ghost" | "inverse";
   external?: boolean;
   className?: string;
 };
@@ -16,6 +16,8 @@ const variants = {
     "border border-navy bg-transparent text-navy hover:bg-navy hover:text-navy-foreground",
   ghost:
     "text-navy underline decoration-brass decoration-2 underline-offset-4 hover:text-navy-deep",
+  inverse:
+    "bg-parchment text-navy hover:bg-page",
 };
 
 export function ButtonLink({
