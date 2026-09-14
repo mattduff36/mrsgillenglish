@@ -45,27 +45,27 @@ export function HeroBlock({ content, section, headingLevel }: BlockProps<"hero">
     <section
       className={surfaceClass(section.surface ?? "taupe", "border-b border-line pb-14 md:pb-20")}
     >
-      <div className="mx-auto w-[92%] md:w-[88%]">
-        <div className="relative aspect-[23/8] w-full overflow-hidden">
+      <div className="mx-auto w-full px-3 md:w-[88%] md:px-0">
+        <div className="hero-banner-frame">
           <ContentImage
             src={heroBannerSrc(section.bannerSrc)}
             fallbackSrc={DEFAULT_HERO_BANNER}
             alt={section.bannerAlt}
             fill
-            className="object-cover object-center"
-            sizes="88vw"
+            className="object-cover object-[52%_center] md:object-center"
+            sizes="(min-width: 768px) 88vw, 100vw"
             priority
           />
         </div>
-        <div className="relative z-10 mx-auto -mt-6 w-full rounded-xl bg-parchment p-6 shadow-[0_18px_40px_-24px_rgb(28_36_51_/_0.45)] md:-mt-[6.4%] md:grid md:w-[75%] md:grid-cols-12 md:items-end md:gap-8 md:p-8">
+        <div className="relative z-10 mx-auto -mt-4 w-[94%] rounded-xl bg-parchment p-5 shadow-[0_18px_40px_-24px_rgb(28_36_51_/_0.45)] md:-mt-[6.4%] md:grid md:w-[75%] md:grid-cols-12 md:items-end md:gap-8 md:p-8">
           <div className="md:col-span-8">
             <Heading
               level={headingLevel}
-              className="max-w-xl font-display text-4xl font-semibold leading-[1.15] tracking-tight text-navy md:text-5xl"
+              className="max-w-xl font-display text-[1.75rem] font-semibold leading-[1.2] tracking-tight text-navy md:text-5xl md:leading-[1.15]"
             >
               {section.heading}
             </Heading>
-            <p className="mt-5 max-w-[40ch] text-lg leading-relaxed text-ink-soft">
+            <p className="mt-3 max-w-[40ch] text-base leading-relaxed text-ink-soft md:mt-5 md:text-lg">
               {section.supporting}
             </p>
             <SectionCtas
@@ -73,16 +73,17 @@ export function HeroBlock({ content, section, headingLevel }: BlockProps<"hero">
               primaryHref={primaryHref}
               secondaryLabel={section.secondaryCtaLabel}
               secondaryHref={secondaryHref}
+              className="mt-5 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap [&_a]:w-full sm:[&_a]:w-auto"
             />
           </div>
-          <figure className="mt-8 flex items-center gap-4 md:col-span-4 md:mt-0 md:justify-end">
+          <figure className="mt-5 flex items-center gap-3 md:col-span-4 md:mt-0 md:justify-end md:gap-4">
             <ContentImage
               src={section.profileSrc}
               fallbackSrc="/brand/youtube-profile.jpg"
               alt={section.profileAlt}
               width={80}
               height={80}
-              className="size-20 rounded-full object-cover"
+              className="size-14 rounded-full object-cover md:size-20"
               priority
             />
             <figcaption>
@@ -209,7 +210,7 @@ export function TutoringBlock({ content, section, headingLevel }: BlockProps<"tu
             ) : null}
           </div>
 
-          <div className="flex justify-center md:col-span-5">
+          <div className="hidden justify-center md:col-span-5 md:flex">
             <figure className="size-72 shrink-0 overflow-hidden rounded-full bg-taupe sm:size-80 md:size-96">
               <ContentImage
                 src={tutoringIllustration.src}

@@ -24,7 +24,7 @@ Pack files, unused unless a later section needs them:
 - `quill-and-candle.png`
 - `closed-books-and-quill.png`
 
-The source YouTube files are small. Use `youtube-banner-wide.jpg` for the home hero so the crop stays sharp. The illustrated portrait stays near native scale in the header and on the overlapping plate. The home hero is a wide cropped banner (about 88% of the viewport) with a narrower parchment plate overlapping the lower edge, so the desk objects remain visible at the sides. Do not show the banner as a thin uncropped 64px strip.
+The source YouTube files are small. Use `youtube-banner-wide.jpg` for the home hero so the crop stays sharp. The illustrated portrait stays near native scale in the header and on the overlapping plate. The home hero is a wide cropped banner (about 88% of the viewport on desktop) with a narrower parchment plate overlapping the lower edge, so the desk objects remain visible at the sides. On small screens crop to about 16:5 so the portrait and “Mrs Gill The English Teacher” stay readable; do not show the banner as a thin uncropped 64px strip. The circular tutoring still-life is desktop-only.
 
 The professional photograph is a different register: warmer, contemporary, for tutoring trust. Use it in a rounded parchment panel. Do not crop it into a circle; the garden pose loses the blossom and shoulders.
 

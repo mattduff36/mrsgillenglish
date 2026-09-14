@@ -38,6 +38,19 @@ body {
   outline-offset: 3px;
 }
 
+.hero-banner-frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 16 / 5;
+}
+
+@media (min-width: 768px) {
+  .hero-banner-frame {
+    aspect-ratio: 23 / 8;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
